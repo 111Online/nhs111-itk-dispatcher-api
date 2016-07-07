@@ -15,13 +15,13 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
 
         protected override void Configure()
         {
-            Mapper.CreateMap<Address, ItkDispatcherSOAPService.Address>();
-            Mapper.CreateMap<GpPractice, ItkDispatcherSOAPService.GPPractice>();
-            Mapper.CreateMap<ServiceDetails, ItkDispatcherSOAPService.SubmitToServiceDetails>();
+            CreateMap<Address, ItkDispatcherSOAPService.Address>();
+            CreateMap<GpPractice, ItkDispatcherSOAPService.GPPractice>();
+            CreateMap<ServiceDetails, ItkDispatcherSOAPService.SubmitToServiceDetails>();
 
-            Mapper.CreateMap<ItkDispatchRequest, SubmitEncounterToServiceRequest>();
-            Mapper.CreateMap<CaseDetails, SubmitToCallQueueDetails>();
-            Mapper.CreateMap<PatientDetails, SubmitPatientService>()
+            CreateMap<ItkDispatchRequest, SubmitEncounterToServiceRequest>();
+            CreateMap<CaseDetails, SubmitToCallQueueDetails>();
+            CreateMap<PatientDetails, SubmitPatientService>()
                 .ForMember(dest => dest.DateOfBirth,
                     opt => opt.MapFrom(src => new DateOfBirth() {Item = src.DateOfBirth.ToString("yyyy-MM-dd")}))
                 .ForMember(src => src.InformantType, opt => opt.UseValue(informantType.Self))

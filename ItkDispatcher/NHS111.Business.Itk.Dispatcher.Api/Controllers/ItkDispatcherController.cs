@@ -7,6 +7,7 @@ using System.Web.Http;
 using AutoMapper;
 using NHS111.Business.Itk.Dispatcher.Api.Builders;
 using NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService;
+using NHS111.Business.Itk.Dispatcher.Api.Mappings;
 using NHS111.Domain.Itk.Dispatcher.Models;
 
 namespace NHS111.Business.Itk.Dispatcher.Api.Controllers
@@ -14,13 +15,11 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Controllers
     public class ItkDispatcherController : ApiController
     {
         private readonly MessageEngine _itkDispatcher;
-        private readonly IMappingEngine _mappingEngine;
         private readonly IItkDispatchResponseBuilder _itkDispatchResponseBuilder;
 
-        public ItkDispatcherController(MessageEngine itkDispatcher, IMappingEngine mappingEngine, IItkDispatchResponseBuilder itkDispatchResponseBuilder)
+        public ItkDispatcherController(MessageEngine itkDispatcher, IItkDispatchResponseBuilder itkDispatchResponseBuilder)
         {
             _itkDispatcher = itkDispatcher;
-            _mappingEngine = mappingEngine;
             _itkDispatchResponseBuilder = itkDispatchResponseBuilder;
         }
 
@@ -29,7 +28,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Controllers
         public async Task<ItkDispatchResponse> SendItkMessage(ItkDispatchRequest request)
         {
             BypassCertificateError();
-            var submitHaSCToService = _mappingEngine.Mapper.Map<ItkDispatchRequest, SubmitHaSCToService>(request);
+            var submitHaSCToService = AutoMapperWebConfiguration.Mapper.Map<ItkDispatchRequest, SubmitHaSCToService>(request);
             SubmitHaSCToServiceResponse response = null;
             try {
                 response = await _itkDispatcher.SubmitHaSCToServiceAsync(submitHaSCToService);

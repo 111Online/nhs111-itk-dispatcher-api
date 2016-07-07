@@ -5,7 +5,7 @@ using Authentication = NHS111.Domain.Itk.Dispatcher.Models.Authentication;
 
 namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
 {
-    public class FromITKDispatchRequestToSubmitHaSCToService : Profile
+    public class FromItkDispatchRequestToSubmitHaScToService : Profile
     {
         public override string ProfileName
         {
@@ -14,10 +14,10 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
 
         protected override void Configure()
         {
-            Mapper.CreateMap<ItkDispatchRequest, SubmitHaSCToService>()
+            CreateMap<ItkDispatchRequest, SubmitHaSCToService>()
                 .ForMember(dest => dest.SubmitEncounterToServiceRequest, opt => opt.MapFrom(src => src));
          
-            Mapper.CreateMap<Authentication, ItkDispatcherSOAPService.Authentication>();
+            CreateMap<Authentication, ItkDispatcherSOAPService.Authentication>();
 
         }
     }

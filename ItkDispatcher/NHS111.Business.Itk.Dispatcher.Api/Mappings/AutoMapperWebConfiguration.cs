@@ -4,13 +4,16 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
 {
     public static class AutoMapperWebConfiguration
     {
+        public static IMapper Mapper;
         public static void Configure()
         {
-            Mapper.Initialize(cfg =>
+            var config = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile(new FromITKDispatchRequestToSubmitHaSCToService());
+                cfg.AddProfile(new FromItkDispatchRequestToSubmitHaScToService());
                 cfg.AddProfile(new FromItkDispatchRequestToSubmitEncounterToServiceRequest());
             });
+            Mapper = config.CreateMapper();
+            config.AssertConfigurationIsValid();
         }
     }
 }
