@@ -3,7 +3,7 @@
 setlocal enabledelayedexpansion
 
 set MSBUILDER="C:\Program Files (x86)\MSBuild\12.0\Bin\MSBuild.exe"
-set NUGET="C:\tools\nuget.exe"
+set NUGET="ItkDispatcher\.NuGet\NuGet.exe"
 set OUTPUTDIR="L:\Work\111 Online\nhs111-build-dir\nhs111-itk-dispatcher-api"
 REM C:\Windows\Microsoft.NET\Framework64\v4.0.30319
 
