@@ -11,7 +11,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.IoC
     {
         public ItkDispatcherApiRegistry()
         {
-            var configuration = new Itk.Dispatcher.Api.Configuration.Configuration();
+            var configuration = new Configuration.Configuration();
             For<MessageEngine>().Use(new MessageEngineClient(new BasicHttpBinding(BasicHttpSecurityMode.Transport), new EndpointAddress(configuration.EsbEndpointUrl)));
             AutoMapperWebConfiguration.Configure();
             Scan(scan =>
