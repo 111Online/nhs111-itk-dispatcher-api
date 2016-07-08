@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using KafkaNet.Protocol;
 using NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService;
 using NHS111.Domain.Itk.Dispatcher.Models;
 using Address = NHS111.Domain.Itk.Dispatcher.Models.Address;
@@ -16,11 +17,16 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
         protected override void Configure()
         {
             CreateMap<Address, ItkDispatcherSOAPService.Address>();
-            CreateMap<GpPractice, ItkDispatcherSOAPService.GPPractice>();
-            CreateMap<ServiceDetails, ItkDispatcherSOAPService.SubmitToServiceDetails>();
+            CreateMap<GpPractice, GPPractice>();
+            CreateMap<ServiceDetails, SubmitToServiceDetails>()
+                .ForMember(dest => dest.contactDetails, opt => opt.Ignore())
+                .ForMember(dest => dest.address, opt => opt.Ignore());
 
-            CreateMap<ItkDispatchRequest, SubmitEncounterToServiceRequest>();
-            CreateMap<CaseDetails, SubmitToCallQueueDetails>();
+            CreateMap<ItkDispatchRequest, SubmitEncounterToServiceRequest>()
+                .ForMember(dest => dest.SendToRepeatCaller, opt => opt.Ignore());
+            CreateMap<CaseDetails, SubmitToCallQueueDetails>()
+                .ForMember(dest => dest.CaseSummary, opt => opt.Ignore())
+                .ForMember(dest => dest.Provider, opt => opt.Ignore());
             CreateMap<PatientDetails, SubmitPatientService>()
                 .ForMember(dest => dest.DateOfBirth,
                     opt => opt.MapFrom(src => new DateOfBirth() {Item = src.DateOfBirth.ToString("yyyy-MM-dd")}))
@@ -28,10 +34,10 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
                 .ForMember(src => src.CurrentAddress,
                     opt =>
                         opt.MapFrom(
-                            src => new ItkDispatcherSOAPService.Address() {PostalCode = src.CurrentLocationPostcode}));
-
-
-
+                            src => new ItkDispatcherSOAPService.Address() {PostalCode = src.CurrentLocationPostcode}))
+                .ForMember(dest => dest.NhsNumber, opt => opt.Ignore())
+                .ForMember(dest => dest.EmailAddress, opt => opt.Ignore())
+                .ForMember(dest => dest.InformantName, opt => opt.Ignore());
         }
     }
 }
