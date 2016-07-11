@@ -1,6 +1,9 @@
 ﻿
 using System;
 using System.Net;
+using System.Net.Http;
+using System.Text;
+using Newtonsoft.Json;
 using NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService;
 using NHS111.Domain.Itk.Dispatcher.Models;
 
@@ -27,7 +30,8 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Builders {
             return new ItkDispatchResponse
             {
                 StatusCode = HttpStatusCode.InternalServerError,
-                Body = "An error has occured processing the request."
+                Body = string.Format("An error has occured processing the request. {0}", exception.Message),
+                Content = new StringContent(JsonConvert.SerializeObject(exception.Message), Encoding.UTF8, "application/json")
             };
         }
     }
