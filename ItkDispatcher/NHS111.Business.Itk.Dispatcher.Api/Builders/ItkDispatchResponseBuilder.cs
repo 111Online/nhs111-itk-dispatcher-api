@@ -30,7 +30,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Builders {
             return new ItkDispatchResponse
             {
                 StatusCode = HttpStatusCode.InternalServerError,
-                Body = string.Format("An error has occured processing the request. {0}", exception.Message),
+                Body = "An error has occured processing the request.",
                 Content = new StringContent(JsonConvert.SerializeObject(exception.Message), Encoding.UTF8, "application/json")
             };
         }
