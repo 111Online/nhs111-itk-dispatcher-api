@@ -1,4 +1,7 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
 using KafkaNet.Protocol;
 using NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService;
 using NHS111.Domain.Itk.Dispatcher.Models;
@@ -23,10 +26,15 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
                 .ForMember(dest => dest.address, opt => opt.Ignore());
 
             CreateMap<ItkDispatchRequest, SubmitEncounterToServiceRequest>()
-                .ForMember(dest => dest.SendToRepeatCaller, opt => opt.Ignore());
+                .ForMember(dest => dest.SendToRepeatCaller, opt => opt.Ignore())
+                .ForMember(dest => dest.CaseDetails, opt => opt.MapFrom(src => src.CaseDetails));
             CreateMap<CaseDetails, SubmitToCallQueueDetails>()
-                .ForMember(dest => dest.CaseSummary, opt => opt.Ignore())
+                .ForMember(dest => dest.CaseSummary, opt => opt.Condition(src => src.ReportItems !=null))
+                .ForMember(dest => dest.CaseSummary, opt => opt.ResolveUsing(src =>
+                    src.ReportItems != null ? src.ReportItems.Select(i => new DataInstance() { Caption = i, Name = "Report_Item" }) : null))
                 .ForMember(dest => dest.Provider, opt => opt.Ignore());
+
+          
             CreateMap<PatientDetails, SubmitPatientService>()
                 .ForMember(dest => dest.DateOfBirth,
                     opt => opt.MapFrom(src => new DateOfBirth() {Item = src.DateOfBirth.ToString("yyyy-MM-dd")}))
@@ -40,4 +48,8 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
                 .ForMember(dest => dest.InformantName, opt => opt.Ignore());
         }
     }
+
+ 
+
+   
 }
