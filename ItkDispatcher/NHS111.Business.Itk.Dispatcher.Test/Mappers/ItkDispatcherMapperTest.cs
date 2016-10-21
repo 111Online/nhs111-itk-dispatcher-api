@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
+using Castle.Components.DictionaryAdapter;
 using NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService;
 using NHS111.Business.Itk.Dispatcher.Api.Mappings;
 using NHS111.Domain.Itk.Dispatcher.Models;
@@ -16,35 +19,14 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Mappers
     {
         private MapperConfiguration _config;
         private IMapper _mapper;
-        
+
+        private ItkDispatchRequest _basicRequest;
+
+
         [SetUp]
         public void InitilaiseConverters()
         {
-            //AppDomain.CurrentDomain.GetAssemblies();
-            _config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new FromItkDispatchRequestToSubmitHaScToService());
-                cfg.AddProfile(new FromItkDispatchRequestToSubmitEncounterToServiceRequest());
-            });
-            _mapper = _config.CreateMapper();
-        }
-
-        [Test]
-        public void FromITKDispatchRequestToSubmitHaSCToService_ConfiguredCorrectly()
-        {
-            _config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new FromItkDispatchRequestToSubmitHaScToService());
-                cfg.AddProfile(new FromItkDispatchRequestToSubmitEncounterToServiceRequest());
-            });
-            _mapper = _config.CreateMapper();
-            _config.AssertConfigurationIsValid("FromITKDispatchRequestToSubmitHaSCToService");
-        }
-
-        [Test]
-        public void Map_ITKDispatchRequest_To_ToSubmitHaSCToService()
-        {
-            var dispatchRequest = new ItkDispatchRequest()
+            _basicRequest = new ItkDispatchRequest()
             {
                 Authentication = new Authentication()
                 {
@@ -81,14 +63,57 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Mappers
                     Id = "1234",
                     Name = "TestSurgery",
                     PostCode = "TT22 5TT"
+                },
+                CaseDetails = new CaseDetails()
+                {
+                    DispositionCode = "Dx123",
+                    DispositionName = "Test Disposition"
                 }
             };
+            //AppDomain.CurrentDomain.GetAssemblies();
+            _config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new FromItkDispatchRequestToSubmitHaScToService());
+                cfg.AddProfile(new FromItkDispatchRequestToSubmitEncounterToServiceRequest());
+            });
+            _mapper = _config.CreateMapper();
+        }
 
-            var result = _mapper.Map<ItkDispatchRequest, SubmitHaSCToService>(dispatchRequest);
+        [Test]
+        public void FromITKDispatchRequestToSubmitHaSCToService_ConfiguredCorrectly()
+        {
+            _config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new FromItkDispatchRequestToSubmitHaScToService());
+                cfg.AddProfile(new FromItkDispatchRequestToSubmitEncounterToServiceRequest());
+            });
+            _mapper = _config.CreateMapper();
+            _config.AssertConfigurationIsValid("FromITKDispatchRequestToSubmitHaSCToService");
+        }
+
+        [Test]
+        public void Map_ITKDispatchRequest_To_ToSubmitHaSCToService()
+        {
+            var requestWithReportItems = _basicRequest;
+            requestWithReportItems.CaseDetails.ReportItems = new List<string>() {"Report line 1", "Report line 2"};
+
+            var result = _mapper.Map<ItkDispatchRequest, SubmitHaSCToService>(requestWithReportItems);
 
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Authentication);
             Assert.IsNotNull(result.SubmitEncounterToServiceRequest);
+            Assert.IsNotNull(result.SubmitEncounterToServiceRequest.CaseDetails);
+            Assert.AreEqual(2,result.SubmitEncounterToServiceRequest.CaseDetails.CaseSummary.Count());
+            Assert.AreEqual("Report line 1", result.SubmitEncounterToServiceRequest.CaseDetails.CaseSummary[0].Caption);
+            Assert.AreEqual("Report_Item", result.SubmitEncounterToServiceRequest.CaseDetails.CaseSummary[0].Name);
+        }
+
+        [Test]
+        public void Map_ITKDispatchRequest_To_ToSubmitHaSCToService_With_Null_ReportItems()
+        {
+            var result = _mapper.Map<ItkDispatchRequest, SubmitHaSCToService>(_basicRequest);
+            Assert.IsNotNull(result);
+            Assert.IsNull(result.SubmitEncounterToServiceRequest.CaseDetails.CaseSummary);
         }
 
     }
