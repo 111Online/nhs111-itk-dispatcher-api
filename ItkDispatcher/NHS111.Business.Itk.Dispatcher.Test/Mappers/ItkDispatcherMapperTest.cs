@@ -92,7 +92,7 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Mappers
         }
 
         [Test]
-        public void Map_ITKDispatchRequest_To_ToSubmitHaSCToService()
+        public void Map_ITKDispatchRequest_To_ToSubmitHaSCToService_with_ReportText()
         {
             var requestWithReportItems = _basicRequest;
             requestWithReportItems.CaseDetails.ReportItems = new List<string>() {"Report line 1", "Report line 2"};
@@ -104,8 +104,32 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Mappers
             Assert.IsNotNull(result.SubmitEncounterToServiceRequest);
             Assert.IsNotNull(result.SubmitEncounterToServiceRequest.CaseDetails);
             Assert.AreEqual(2,result.SubmitEncounterToServiceRequest.CaseDetails.CaseSummary.Count());
-            Assert.AreEqual("Report line 1", result.SubmitEncounterToServiceRequest.CaseDetails.CaseSummary[0].Caption);
-            Assert.AreEqual("Report_Item", result.SubmitEncounterToServiceRequest.CaseDetails.CaseSummary[0].Name);
+
+            Assert.AreEqual("Report line 1", result.SubmitEncounterToServiceRequest.CaseDetails.CaseSummary.Where(c => c.Name == "ReportText").First().Caption);
+            Assert.IsTrue(result.SubmitEncounterToServiceRequest.CaseDetails.CaseSummary.Any(c => c.Name == "ReportText"), "CaseDetails does not contain summary item with a name of 'ReportText'");
+            Assert.AreEqual("Report line 1", result.SubmitEncounterToServiceRequest.CaseDetails.CaseSummary.Where(c => c.Name == "ReportText").First().Values[0]);
+
+        }
+
+        [Test]
+        public void Map_ITKDispatchRequest_To_ToSubmitHaSCToService_with_ConsultationItems()
+        {
+            var requestWithReportItems = _basicRequest;
+            requestWithReportItems.CaseDetails.ConsultationSummaryItems = new List<string>() { "Consult line 1", "Consult line 2" }; ;
+
+            var result = _mapper.Map<ItkDispatchRequest, SubmitHaSCToService>(requestWithReportItems);
+
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Authentication);
+            Assert.IsNotNull(result.SubmitEncounterToServiceRequest);
+            Assert.IsNotNull(result.SubmitEncounterToServiceRequest.CaseDetails);
+            Assert.AreEqual(2, result.SubmitEncounterToServiceRequest.CaseDetails.CaseSummary.Count());
+
+            Assert.AreEqual("Consult line 1", result.SubmitEncounterToServiceRequest.CaseDetails.CaseSummary.Where(c => c.Name == "DispositionDisplayText").First().Caption);
+            Assert.IsTrue(result.SubmitEncounterToServiceRequest.CaseDetails.CaseSummary.Any(c => c.Name == "DispositionDisplayText"), "CaseDetails does not contain summary item with a name of 'DispositionDisplayText'");
+            Assert.AreEqual("Consult line 1", result.SubmitEncounterToServiceRequest.CaseDetails.CaseSummary.Where(c => c.Name == "DispositionDisplayText").First().Values[0]);
+
+
         }
 
         [Test]
