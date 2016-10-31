@@ -29,12 +29,8 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
                 .ForMember(dest => dest.SendToRepeatCaller, opt => opt.Ignore())
                 .ForMember(dest => dest.CaseDetails, opt => opt.MapFrom(src => src.CaseDetails));
             CreateMap<CaseDetails, SubmitToCallQueueDetails>()
-                .ForMember(dest => dest.CaseSummary, opt => opt.Condition(src => src.ReportItems !=null))
-                .ForMember(dest => dest.CaseSummary, opt => opt.ResolveUsing(src =>
-                    (src.ReportItems != null || src.ConsultationSummaryItems != null) ? 
-                        src.ReportItems.Select(i => new DataInstance() { Caption = i, Name = "ReportText", Values = new string[] { i } })
-                        .Concat(src.ConsultationSummaryItems.Select(cs => new DataInstance() { Name = "DispositionDisplayText", Caption = cs, Values = new string[]{cs}})) 
-                                                                                      : null))
+                .ForMember(dest => dest.CaseSummary, opt => opt.Condition(src => src.ReportItems != null || src.ConsultationSummaryItems != null))
+                .ForMember(dest => dest.CaseSummary, opt => opt.ResolveUsing(src => Resolve(src)))
                 .ForMember(dest => dest.Provider, opt => opt.Ignore());
 
           
@@ -49,6 +45,21 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
                 .ForMember(dest => dest.NhsNumber, opt => opt.Ignore())
                 .ForMember(dest => dest.EmailAddress, opt => opt.Ignore())
                 .ForMember(dest => dest.InformantName, opt => opt.Ignore());
+        }
+
+
+        private DataInstance[] Resolve(CaseDetails caseDetails)
+        {
+            if (caseDetails.ConsultationSummaryItems == null && caseDetails.ReportItems == null) return null;
+
+            var items = new List<DataInstance>();
+            if (caseDetails.ReportItems != null)
+                items.AddRange(caseDetails.ReportItems.Select(i => new DataInstance() { Caption = i, Name = "ReportText", Values = new string[] { i } }));
+
+            if (caseDetails.ConsultationSummaryItems != null)
+                items.AddRange(caseDetails.ConsultationSummaryItems.Select(c => new DataInstance() { Caption = c, Name = "DispositionDisplayText", Values = new string[] { c } }));
+            
+            return items.ToArray();
         }
     }
 
