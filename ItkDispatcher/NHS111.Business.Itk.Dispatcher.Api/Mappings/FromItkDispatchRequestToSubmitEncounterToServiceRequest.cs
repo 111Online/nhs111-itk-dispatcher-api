@@ -31,7 +31,10 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
             CreateMap<CaseDetails, SubmitToCallQueueDetails>()
                 .ForMember(dest => dest.CaseSummary, opt => opt.Condition(src => src.ReportItems !=null))
                 .ForMember(dest => dest.CaseSummary, opt => opt.ResolveUsing(src =>
-                    src.ReportItems != null ? src.ReportItems.Select(i => new DataInstance() { Caption = i, Name = "Report_Item" }) : null))
+                    (src.ReportItems != null || src.ConsultationSummaryItems != null) ? 
+                        src.ReportItems.Select(i => new DataInstance() { Caption = i, Name = "ReportText", Values = new string[] { i } })
+                        .Concat(src.ConsultationSummaryItems.Select(cs => new DataInstance() { Name = "DispositionDisplayText", Caption = cs, Values = new string[]{cs}})) 
+                                                                                      : null))
                 .ForMember(dest => dest.Provider, opt => opt.Ignore());
 
           
