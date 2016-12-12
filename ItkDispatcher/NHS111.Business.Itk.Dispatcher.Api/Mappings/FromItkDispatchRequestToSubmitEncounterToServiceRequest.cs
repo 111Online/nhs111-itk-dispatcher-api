@@ -38,10 +38,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
                 .ForMember(dest => dest.DateOfBirth,
                     opt => opt.MapFrom(src => new DateOfBirth() {Item = src.DateOfBirth.ToString("yyyy-MM-dd")}))
                 .ForMember(src => src.InformantType, opt => opt.UseValue(informantType.Self))
-                .ForMember(src => src.CurrentAddress,
-                    opt =>
-                        opt.MapFrom(
-                            src => new ItkDispatcherSOAPService.Address() {PostalCode = src.CurrentLocationPostcode}))
+
                 .ForMember(dest => dest.NhsNumber, opt => opt.Ignore())
                 .ForMember(dest => dest.EmailAddress, opt => opt.Ignore())
                 .ForMember(dest => dest.InformantName, opt => opt.Ignore());
