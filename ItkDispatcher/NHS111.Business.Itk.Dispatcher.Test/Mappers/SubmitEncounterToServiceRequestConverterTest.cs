@@ -19,8 +19,8 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Mappers
         public const string TEST_PATIENT_FORENAME = "PatientForename";
         public const string TEST_PATIENT_SURNAME = "PatientSurname";
 
-        public const string TEST_PATIENT_HOME_POSTCODE = "HS1 6HH";
-        public const string TEST_PATIENT_HOME_STREETADDRESS = "1 home lane";
+        public const string TEST_PATIENT_CURRENT_POSTCODE = "HS1 6HH";
+        public const string TEST_PATIENT_CURRENT_STREETADDRESS = "1 home lane";
 
         public const string TEST_GP_POSTCODE = "TS1 6TH";
         public const string TEST_GP_STREETADDRESS = "1 test gp lane";
@@ -80,10 +80,10 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Mappers
                         Ods = TEST_GP_ODS_CODE,
                         Telephone = TEST_GP_TELEPHONE
                     },
-                    HomeAddress = new Address()
+                    CurrentAddress = new Address()
                     {
-                        StreetAddressLine1 = TEST_PATIENT_HOME_STREETADDRESS,
-                        PostalCode = TEST_PATIENT_HOME_POSTCODE
+                        StreetAddressLine1 = TEST_PATIENT_CURRENT_STREETADDRESS,
+                        PostalCode = TEST_PATIENT_CURRENT_POSTCODE
                     },
                     ServiceAddressPostcode = "SV10 6YY",
                     TelephoneNumber = TEST_PHONE_NUMBER
@@ -115,8 +115,8 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Mappers
             Assert.AreEqual(result.PatientDetails.Gender, gender.Female);
             Assert.AreEqual(result.PatientDetails.DateOfBirth.Item, "1980-11-30");
 
-            Assert.AreEqual(result.PatientDetails.HomeAddress.PostalCode, TEST_PATIENT_HOME_POSTCODE );
-            Assert.AreEqual(result.PatientDetails.HomeAddress.StreetAddressLine1, TEST_PATIENT_HOME_STREETADDRESS);
+            Assert.AreEqual(result.PatientDetails.CurrentAddress.PostalCode, TEST_PATIENT_CURRENT_POSTCODE);
+            Assert.AreEqual(result.PatientDetails.CurrentAddress.StreetAddressLine1, TEST_PATIENT_CURRENT_STREETADDRESS);
 
             Assert.AreEqual(result.PatientDetails.GpPractice.Address.PostalCode, TEST_GP_POSTCODE);
             Assert.AreEqual(result.PatientDetails.GpPractice.Address.StreetAddressLine1, TEST_GP_STREETADDRESS);
