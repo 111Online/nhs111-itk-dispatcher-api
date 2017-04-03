@@ -46,6 +46,7 @@
     <Compile Include="Models\Authentication.cs" />
     <Compile Include="Models\CaseDetails.cs" />
     <Compile Include="Models\GpPractice.cs" />
+    <Compile Include="Models\InformantDetails.cs" />
     <Compile Include="Models\ItkDispatchRequest.cs" />
     <Compile Include="Models\ItkDispatchResponse.cs" />
     <Compile Include="Models\PatientDetails.cs" />

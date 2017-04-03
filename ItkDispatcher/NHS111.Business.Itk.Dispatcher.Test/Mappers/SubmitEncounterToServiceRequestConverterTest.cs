@@ -26,7 +26,7 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Mappers
         public const string TEST_GP_STREETADDRESS = "1 test gp lane";
 
         public const string TEST_GP_TELEPHONE = "02380555555";
-        public const string TEST_GP_ODS_CODE ="RA286";
+        public const string TEST_GP_ODS_CODE = "RA286";
 
         public const int DOS_SERVICE_ID = 1234;
         public const string TEST_SERVICE_ODS_CODE = "Y028240002";
@@ -34,7 +34,7 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Mappers
         public const string TEST_EXTERNAL_REF = "REF_123456";
         public const string TEST_DX_CODE = "DX0123";
         public const string TEST_DX_NAME = "Rashes";
-   
+
 
         [SetUp]
         public void InitilaiseConverters()
@@ -115,6 +115,8 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Mappers
             Assert.AreEqual(result.PatientDetails.Gender, gender.Female);
             Assert.AreEqual(result.PatientDetails.DateOfBirth.Item, "1980-11-30");
 
+            Assert.AreEqual(result.PatientDetails.InformantType, informantType.Self);
+
             Assert.AreEqual(result.PatientDetails.CurrentAddress.PostalCode, TEST_PATIENT_CURRENT_POSTCODE);
             Assert.AreEqual(result.PatientDetails.CurrentAddress.StreetAddressLine1, TEST_PATIENT_CURRENT_STREETADDRESS);
 
@@ -132,6 +134,46 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Mappers
             Assert.AreEqual(result.CaseDetails.DispositionName, TEST_DX_NAME);
         }
 
+        [Test]
+        public void Map_ITKDispatchRequest_To_SubmitEncounterToServiceRequest_informant_self()
+        {
+            var dispatchRequest = new ItkDispatchRequest()
+            {
+                PatientDetails = new PatientDetails()
+                {
+                    Informant = new InformantDetails()
+                    {
+                        Type = InformantType.Self,
+                        Forename = "Me",
+                        Surname = "Myself"
+                    }
+                }
+            };
 
+            var result = _mapper.Map<ItkDispatchRequest, SubmitEncounterToServiceRequest>(dispatchRequest);
+            Assert.AreEqual(informantType.Self, result.PatientDetails.InformantType);
+            Assert.AreEqual(string.Format("{0} {1}", dispatchRequest.PatientDetails.Informant.Forename, dispatchRequest.PatientDetails.Informant.Surname), result.PatientDetails.InformantName);
+        }
+
+        [Test]
+        public void Map_ITKDispatchRequest_To_SubmitEncounterToServiceRequest_informant_notspecified()
+        {
+            var dispatchRequest = new ItkDispatchRequest()
+            {
+                PatientDetails = new PatientDetails()
+                {
+                    Informant = new InformantDetails()
+                    {
+                        Type = InformantType.NotSpecified,
+                        Forename = "someone",
+                        Surname = "else"
+                    }
+                }
+            };
+
+            var result = _mapper.Map<ItkDispatchRequest, SubmitEncounterToServiceRequest>(dispatchRequest);
+            Assert.AreEqual(informantType.NotSpecified, result.PatientDetails.InformantType);
+            Assert.AreEqual(string.Format("{0} {1}", dispatchRequest.PatientDetails.Informant.Forename, dispatchRequest.PatientDetails.Informant.Surname), result.PatientDetails.InformantName);
+        }
     }
 }

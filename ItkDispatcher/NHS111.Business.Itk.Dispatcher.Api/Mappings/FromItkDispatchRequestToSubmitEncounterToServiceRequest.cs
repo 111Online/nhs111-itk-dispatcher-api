@@ -20,7 +20,9 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
         protected override void Configure()
         {
             CreateMap<Address, ItkDispatcherSOAPService.Address>();
+
             CreateMap<GpPractice, GPPractice>();
+
             CreateMap<ServiceDetails, SubmitToServiceDetails>()
                 .ForMember(dest => dest.contactDetails, opt => opt.Ignore())
                 .ForMember(dest => dest.address, opt => opt.Ignore());
@@ -28,20 +30,14 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
             CreateMap<ItkDispatchRequest, SubmitEncounterToServiceRequest>()
                 .ForMember(dest => dest.SendToRepeatCaller, opt => opt.Ignore())
                 .ForMember(dest => dest.CaseDetails, opt => opt.MapFrom(src => src.CaseDetails));
+
             CreateMap<CaseDetails, SubmitToCallQueueDetails>()
                 .ForMember(dest => dest.CaseSummary, opt => opt.Condition(src => src.ReportItems != null || src.ConsultationSummaryItems != null))
                 .ForMember(dest => dest.CaseSummary, opt => opt.ResolveUsing(src => Resolve(src)))
                 .ForMember(dest => dest.Provider, opt => opt.Ignore());
 
-          
             CreateMap<PatientDetails, SubmitPatientService>()
-                .ForMember(dest => dest.DateOfBirth,
-                    opt => opt.MapFrom(src => new DateOfBirth() {Item = src.DateOfBirth.ToString("yyyy-MM-dd")}))
-                .ForMember(src => src.InformantType, opt => opt.UseValue(informantType.Self))
-
-                .ForMember(dest => dest.NhsNumber, opt => opt.Ignore())
-                .ForMember(dest => dest.EmailAddress, opt => opt.Ignore())
-                .ForMember(dest => dest.InformantName, opt => opt.Ignore());
+                .ConvertUsing<FromPatientDetailsTSubmitPatientServiceConverter>();
         }
 
 
@@ -60,7 +56,33 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
         }
     }
 
- 
+    public class FromPatientDetailsTSubmitPatientServiceConverter : ITypeConverter<PatientDetails, SubmitPatientService>
+    {
+        public SubmitPatientService Convert(PatientDetails source, SubmitPatientService destination, ResolutionContext context)
+        {
+            var submitPatientservice = destination ?? new SubmitPatientService();
 
-   
+            submitPatientservice.TelephoneNumber = source.TelephoneNumber;
+            submitPatientservice.Forename = source.Forename;
+            submitPatientservice.Surname = source.Surname;
+
+            gender gender = Enum.TryParse(source.Gender, out gender) ? gender : gender.Not_Known;
+            submitPatientservice.Gender = gender;
+
+            submitPatientservice.DateOfBirth = new DateOfBirth() {Item = source.DateOfBirth.ToString("yyyy-MM-dd")};
+
+            submitPatientservice.CurrentAddress = context.Mapper.Map<ItkDispatcherSOAPService.Address>(source.CurrentAddress);
+
+            submitPatientservice.GpPractice = context.Mapper.Map<GPPractice>(source.GpPractice);
+
+            submitPatientservice.InformantType = informantType.Self;
+            if (source.Informant == null) return submitPatientservice;
+
+            informantType informant = Enum.TryParse(source.Informant.Type.ToString(), out informant) ? informant : informantType.NotSpecified;
+            submitPatientservice.InformantType = informant;
+            submitPatientservice.InformantName = string.Format("{0} {1}", source.Informant.Forename, source.Informant.Surname);
+
+            return submitPatientservice;
+        }
+    }
 }
