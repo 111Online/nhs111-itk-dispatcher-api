@@ -119,8 +119,8 @@
       <HintPath>..\packages\NHS111.IoC.1.0.0.26\lib\net451\NHS111.IoC.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NHS111.Utils, Version=1.0.0.17, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NHS111.Utils.1.0.0.17\lib\net451\NHS111.Utils.dll</HintPath>
+    <Reference Include="NHS111.Utils, Version=1.0.0.29, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHS111.Utils.1.0.0.29\lib\net451\NHS111.Utils.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="StackExchange.Redis, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -321,18 +321,17 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\NHS111.Domain.ItkDispatcher\NHS111.Domain.Itk.Dispatcher.csproj">
+      <Project>{5a827201-6af1-419b-bace-65c851ffa90c}</Project>
+      <Name>NHS111.Domain.Itk.Dispatcher</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\ItkDispatcherSOAPService\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NHS111.Domain.ITKDispatcher\NHS111.Domain.Itk.Dispatcher.csproj">
-      <Project>{5A827201-6AF1-419B-BACE-65C851FFA90C}</Project>
-      <Name>NHS111.Domain.Itk.Dispatcher</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

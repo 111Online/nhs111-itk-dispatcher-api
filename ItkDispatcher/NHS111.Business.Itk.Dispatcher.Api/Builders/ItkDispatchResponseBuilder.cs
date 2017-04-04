@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using Newtonsoft.Json;
 using NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService;
+using NHS111.Domain.Itk.Dispatcher.Exceptions;
 using NHS111.Domain.Itk.Dispatcher.Models;
 
 namespace NHS111.Business.Itk.Dispatcher.Api.Builders {
@@ -26,12 +27,17 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Builders {
             return HttpStatusCode.InternalServerError;
         }
 
-        public ItkDispatchResponse Build(Exception exception) {
+        public ItkDispatchResponse Build(Exception exception)
+        {
             return new ItkDispatchResponse
             {
-                StatusCode = HttpStatusCode.InternalServerError,
+                StatusCode =
+                    exception.GetType() == typeof(DuplicateMessageException)
+                        ? HttpStatusCode.Conflict
+                        : HttpStatusCode.InternalServerError,
                 Body = "An error has occured processing the request.",
-                Content = new StringContent(JsonConvert.SerializeObject(exception.Message), Encoding.UTF8, "application/json")
+                Content =
+                    new StringContent(JsonConvert.SerializeObject(exception.Message), Encoding.UTF8, "application/json")
             };
         }
     }
