@@ -33,7 +33,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Controllers
         public async Task<ItkDispatchResponse> SendItkMessage(ItkDispatchRequest request)
         {
             var messageExists = _messageService.MessageAlreadyExists(request.CaseDetails.ExternalReference, JsonConvert.SerializeObject(request));
-            if (messageExists) return _itkDispatchResponseBuilder.Build(new DuplicateMessageException("This message has already been submitted to ITK"));
+            if (messageExists) return _itkDispatchResponseBuilder.Build(new DuplicateMessageException("This message has already been successfully submitted"));
 
             BypassCertificateError();
             var submitHaSCToService = AutoMapperWebConfiguration.Mapper.Map<ItkDispatchRequest, SubmitHaSCToService>(request);
