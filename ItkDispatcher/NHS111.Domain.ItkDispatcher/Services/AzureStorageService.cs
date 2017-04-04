@@ -26,23 +26,29 @@ namespace NHS111.Domain.Itk.Dispatcher.Services
             _table.CreateIfNotExists();
         }
 
-        public Task<int> AddHash(Journey journey)
+        public int AddHash(Journey journey)
         {
-            var insertOperation = TableOperation.Insert(journey);
+            var existingJourney = GetHash(journey.Id);
+            if (existingJourney != null)
+                existingJourney.Hash = journey.Hash;
+            else
+                existingJourney = journey;
+
+            var insertOperation = TableOperation.InsertOrReplace(existingJourney);
             var tableResult = _table.ExecuteAsync(insertOperation);
-            return Task.Run(() => { return tableResult.Id; });
+            return tableResult.Id;
         }
 
-        public Task<Journey> GetHash(string journeyId)
+        public Journey GetHash(string journeyId)
         {
             var retrievedResult = _table.CreateQuery<Journey>().Where(j => j.Id == journeyId);
-            return Task.Run(() => retrievedResult.FirstOrDefault());
+            return retrievedResult.FirstOrDefault();
         }
     }
 
     public interface IAzureStorageService
     {
-        Task<int> AddHash(Journey journey);
-        Task<Journey> GetHash(string journeyId);
+        int AddHash(Journey journey);
+        Journey GetHash(string journeyId);
     }
 }

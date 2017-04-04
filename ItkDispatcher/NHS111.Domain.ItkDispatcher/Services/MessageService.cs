@@ -13,9 +13,9 @@ namespace NHS111.Domain.Itk.Dispatcher.Services
             _azureStorageService = azureStorageService;
         }
 
-        public async Task<bool> MessageAlreadyExists(string messageId, string message)
+        public bool MessageAlreadyExists(string messageId, string message)
         {
-            var journey = await _azureStorageService.GetHash(messageId);
+            var journey = _azureStorageService.GetHash(messageId);
             if (journey == null) return false;
 
             var compare = new ComputeHash();
@@ -33,7 +33,7 @@ namespace NHS111.Domain.Itk.Dispatcher.Services
 
     public interface IMessageService
     {
-        Task<bool> MessageAlreadyExists(string messageId, string message);
+        bool MessageAlreadyExists(string messageId, string message);
         void StoreMessage(string id, string message);
     }
 }

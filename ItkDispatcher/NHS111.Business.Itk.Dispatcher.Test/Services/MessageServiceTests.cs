@@ -25,36 +25,36 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Services
         public void No_existing_message_returns_false()
         {
             Journey journey = null;
-            _moqAzureStorageService.Setup(s => s.GetHash(It.IsAny<string>())).Returns(Task.FromResult(journey));
+            _moqAzureStorageService.Setup(s => s.GetHash(It.IsAny<string>())).Returns(journey);
 
             var srv = new MessageService(_moqAzureStorageService.Object);
 
             var result = srv.MessageAlreadyExists(string.Empty, string.Empty);
-            Assert.IsFalse(result.Result);
+            Assert.IsFalse(result);
         }
 
         [Test]
         public void Existing_message_matches_returns_true()
         {
             var journey = new Journey() { Id = "123456789", Hash = "82DFA5549EBC9AFC168EB7931EBECE" };
-            _moqAzureStorageService.Setup(s => s.GetHash(It.IsAny<string>())).Returns(Task.FromResult(journey));
+            _moqAzureStorageService.Setup(s => s.GetHash(It.IsAny<string>())).Returns(journey);
 
             var srv = new MessageService(_moqAzureStorageService.Object);
 
             var result = srv.MessageAlreadyExists("123456789", "Test message");
-            Assert.IsTrue(result.Result);
+            Assert.IsTrue(result);
         }
 
         [Test]
         public void Existing_message_doesnt_match_return_false()
         {
             var journey = new Journey() { Id = "123456789", Hash = "82DFA5549EBC9AFC168EB7931EBECE" };
-            _moqAzureStorageService.Setup(s => s.GetHash(It.IsAny<string>())).Returns(Task.FromResult(journey));
+            _moqAzureStorageService.Setup(s => s.GetHash(It.IsAny<string>())).Returns(journey);
 
             var srv = new MessageService(_moqAzureStorageService.Object);
 
             var result = srv.MessageAlreadyExists("123456789", "Test message two");
-            Assert.IsFalse(result.Result);
+            Assert.IsFalse(result);
         }
     }
 }
