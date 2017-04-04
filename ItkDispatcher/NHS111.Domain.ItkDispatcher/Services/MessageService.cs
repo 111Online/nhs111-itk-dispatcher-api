@@ -18,15 +18,15 @@ namespace NHS111.Domain.Itk.Dispatcher.Services
             var journey = _azureStorageService.GetHash(messageId);
             if (journey == null) return false;
 
-            var compare = new ComputeHash();
-            var messageHash = compare.Compute(message);
-            return compare.Compare(journey.Hash, messageHash);
+            var hashEngine = new ComputeHash();
+            var messageHash = hashEngine.Compute(message);
+            return hashEngine.Compare(journey.Hash, messageHash);
         }
 
         public void StoreMessage(string id, string message)
         {
-            var compare = new ComputeHash();
-            var messageHash = compare.Compute(message);
+            var hashEngine = new ComputeHash();
+            var messageHash = hashEngine.Compute(message);
             _azureStorageService.AddHash(new Journey() {Id = id, Hash = messageHash});
         }
     }
