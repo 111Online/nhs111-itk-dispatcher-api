@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NHS111.Domain.Itk.Dispatcher", "NHS111.Domain.ItkDispatcher\NHS111.Domain.Itk.Dispatcher.csproj", "{5A827201-6AF1-419B-BACE-65C851FFA90C}"
 EndProject
@@ -51,5 +51,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{6EAFE40C-7BD8-45C6-B7BD-08BB160650B6} = {CB0738F9-67E7-4A44-84C9-3D8F3F8DFAD8}
 		{8941C3BF-8638-48E3-B55D-6C1CF4258D77} = {CB0738F9-67E7-4A44-84C9-3D8F3F8DFAD8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {226C4270-637B-428F-A3E4-20F9D734E74A}
 	EndGlobalSection
 EndGlobal
