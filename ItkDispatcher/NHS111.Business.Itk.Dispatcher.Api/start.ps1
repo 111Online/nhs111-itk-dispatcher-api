@@ -33,5 +33,9 @@ ForEach($add in $xml.configuration.appSettings.add)
 
 $xml.Save($configPath)
 
+$configPath = "$env:APPLICATION_PATH\ApplicationInsights.config"
+
+SetEnironmentVariableValue -key "InstrumentationKey"
+
 $command = "C:\\ServiceMonitor.exe w3svc"
 iex $command
