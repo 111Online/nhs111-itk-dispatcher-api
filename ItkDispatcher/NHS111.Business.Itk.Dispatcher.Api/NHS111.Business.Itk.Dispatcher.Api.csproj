@@ -27,6 +27,7 @@
     </NuGetPackageImportStamp>
     <ApplicationInsightsResourceId>/subscriptions/66bf9d39-b598-433d-9273-0c27e559f37f/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/NHS111.Business.Itk.Dispatcher.Api</ApplicationInsightsResourceId>
     <ApplicationInsightsAnnotationResourceId>/subscriptions/66bf9d39-b598-433d-9273-0c27e559f37f/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/NHS111.Business.Itk.Dispatcher.Api</ApplicationInsightsAnnotationResourceId>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -115,12 +116,12 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NHS111.IoC, Version=1.0.0.26, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NHS111.IoC.1.0.0.26\lib\net451\NHS111.IoC.dll</HintPath>
+    <Reference Include="NHS111.IoC, Version=1.0.0.30, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHS111.IoC.1.0.0.30\lib\net451\NHS111.IoC.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NHS111.Utils, Version=1.0.0.29, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NHS111.Utils.1.0.0.29\lib\net451\NHS111.Utils.dll</HintPath>
+    <Reference Include="NHS111.Utils, Version=1.0.0.36, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHS111.Utils.1.0.0.36\lib\net451\NHS111.Utils.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="StackExchange.Redis, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -227,6 +228,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Service References\Application Insights\ConnectedService.json" />
+    <None Include="Dockerfile" />
+    <None Include=".dockerignore">
+      <DependentUpon>Dockerfile</DependentUpon>
+    </None>
     <None Include="Service References\ItkDispatcherSOAPService\configuration91.svcinfo" />
     <None Include="Service References\ItkDispatcherSOAPService\configuration.svcinfo" />
     <Content Include="IoC\readme.txt" />
@@ -314,6 +319,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Service References\ItkDispatcherSOAPService\MessageEngineService.wsdl" />
+    <Content Include="start.ps1" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

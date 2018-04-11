@@ -72,7 +72,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
             submitPatientservice.DateOfBirth = new DateOfBirth() {Item = source.DateOfBirth.ToString("yyyy-MM-dd")};
 
             submitPatientservice.CurrentAddress = context.Mapper.Map<ItkDispatcherSOAPService.Address>(source.CurrentAddress);
-
+            submitPatientservice.HomeAddress = context.Mapper.Map<ItkDispatcherSOAPService.Address>(source.HomeAddress);
             submitPatientservice.GpPractice = context.Mapper.Map<GPPractice>(source.GpPractice);
 
             submitPatientservice.InformantType = informantType.Self;

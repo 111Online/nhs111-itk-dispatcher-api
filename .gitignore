@@ -199,3 +199,4 @@ FakesAssemblies/
 
 #logfiles
 log.*.txt
+/ItkDispatcher/NHS111.Business.Itk.Dispatcher.Api/Properties/PublishProfiles
