@@ -33,15 +33,16 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
 
             CreateMap<CaseDetails, SubmitToCallQueueDetails>()
                 .ForMember(dest => dest.CaseSummary, opt => opt.Condition(src => src.ReportItems != null || src.ConsultationSummaryItems != null))
-                .ForMember(dest => dest.CaseSummary, opt => opt.ResolveUsing(src => Resolve(src)))
-                .ForMember(dest => dest.Provider, opt => opt.Ignore());
+                .ForMember(dest => dest.CaseSummary, opt => opt.ResolveUsing(ResolveCaseSummary))
+                .ForMember(dest => dest.CaseSteps, opt => opt.ResolveUsing(ResolveCaseSteps))
+                .ForMember(dest => dest.Provider, opt => opt.Ignore())
+                .ForMember(dest => dest.UnstructuredData, opt => opt.Ignore());
 
             CreateMap<PatientDetails, SubmitPatientService>()
                 .ConvertUsing<FromPatientDetailsTSubmitPatientServiceConverter>();
         }
 
-
-        private DataInstance[] Resolve(CaseDetails caseDetails)
+        private static DataInstance[] ResolveCaseSummary(CaseDetails caseDetails)
         {
             if (caseDetails.ConsultationSummaryItems == null && caseDetails.ReportItems == null) return null;
 
@@ -52,6 +53,15 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
             if (caseDetails.ConsultationSummaryItems != null)
                 items.AddRange(caseDetails.ConsultationSummaryItems.Select(c => new DataInstance() { Caption = c, Name = "DispositionDisplayText", Values = new string[] { c } }));
             
+            return items.ToArray();
+        }
+
+        private static stepInstance[] ResolveCaseSteps(CaseDetails caseDetails)
+        {
+            var items = new List<stepInstance>();
+            if (caseDetails.CaseSteps != null)
+                items.AddRange(caseDetails.CaseSteps.Select(i => new stepInstance() { QuestionId = i.QuestionId, AnswerOrder = i.AnswerOrder }));
+
             return items.ToArray();
         }
     }
