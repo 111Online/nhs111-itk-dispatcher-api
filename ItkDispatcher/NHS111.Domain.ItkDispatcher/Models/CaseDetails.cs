@@ -10,5 +10,6 @@ namespace NHS111.Domain.Itk.Dispatcher.Models
         public string DispositionName { get; set; }
         public List<string> ReportItems { get; set; }
         public List<string> ConsultationSummaryItems { get; set; }
+        public List<StepItem> CaseSteps { get; set; }
     }
 }

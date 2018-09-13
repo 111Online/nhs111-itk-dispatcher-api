@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="qEwJ3qX1YucmnRKjeIe0Go2cZNY=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="MX5VsoGFe9gGUAAbQDLQzRBJpU8=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="MessageEngineServiceSoapBinding">
       <properties>
@@ -221,10 +221,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="MessageEnginePort" contract="ItkDispatcherSOAPService.MessageEngine" bindingType="basicHttpBinding" address="https://servicebus.nhsdirect.nhs.uk/LIVE/MessageEngine/V1.5/" bindingConfiguration="MessageEngineServiceSoapBinding">
+    <endpoint name="MessageEnginePort" contract="ItkDispatcherSOAPService.MessageEngine" bindingType="basicHttpBinding" address="https://localhost/LIVE/MessageEngine/V1.5/" bindingConfiguration="MessageEngineServiceSoapBinding">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>https://servicebus.nhsdirect.nhs.uk/LIVE/MessageEngine/V1.5/</serializedValue>
+          <serializedValue>https://localhost/LIVE/MessageEngine/V1.5/</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

@@ -140,5 +140,35 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Mappers
             Assert.IsNull(result.SubmitEncounterToServiceRequest.CaseDetails.CaseSummary);
         }
 
+        [Test]
+        public void Map_ITKDispatchRequest_To_ToSubmitHaSCToService_with_StepItems()
+        {
+            var requestWithReportItems = _basicRequest;
+            requestWithReportItems.CaseDetails.CaseSteps = new List<StepItem>
+            {
+                new StepItem { QuestionId = "q1", AnswerOrder = 0 },
+                new StepItem { QuestionId = "q2", AnswerOrder = 2 },
+            };
+
+            var result = _mapper.Map<ItkDispatchRequest, SubmitHaSCToService>(requestWithReportItems);
+
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Authentication);
+            Assert.IsNotNull(result.SubmitEncounterToServiceRequest);
+            Assert.IsNotNull(result.SubmitEncounterToServiceRequest.CaseDetails);
+            Assert.AreEqual(2, result.SubmitEncounterToServiceRequest.CaseDetails.CaseSteps.Count());
+
+            Assert.AreEqual("q1", result.SubmitEncounterToServiceRequest.CaseDetails.CaseSteps.First().QuestionId);
+            Assert.AreEqual("q2", result.SubmitEncounterToServiceRequest.CaseDetails.CaseSteps.Skip(1).First().QuestionId);
+        }
+
+        [Test]
+        public void Map_ITKDispatchRequest_To_ToSubmitHaSCToService_With_Null_StepItems()
+        {
+            var result = _mapper.Map<ItkDispatchRequest, SubmitHaSCToService>(_basicRequest);
+            Assert.IsNotNull(result);
+            Assert.IsEmpty(result.SubmitEncounterToServiceRequest.CaseDetails.CaseSteps);
+        }
+
     }
 }
