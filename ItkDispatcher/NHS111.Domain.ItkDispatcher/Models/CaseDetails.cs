@@ -6,10 +6,12 @@ namespace NHS111.Domain.Itk.Dispatcher.Models
     {
         public string ExternalReference { get; set; }
         public string Source { get; set; }
+        public string StartingPathwayId { get; set; }
+        public bool IsStartingPathwayTrauma { get; set; }
         public string DispositionCode { get; set; }
         public string DispositionName { get; set; }
-        public List<string> ReportItems { get; set; }
+        public List<ReportItem> ReportItems { get; set; }
         public List<string> ConsultationSummaryItems { get; set; }
-        public List<StepItem> CaseSteps { get; set; }
+        public IEnumerable<StepItem> CaseSteps { get; set; }
     }
 }

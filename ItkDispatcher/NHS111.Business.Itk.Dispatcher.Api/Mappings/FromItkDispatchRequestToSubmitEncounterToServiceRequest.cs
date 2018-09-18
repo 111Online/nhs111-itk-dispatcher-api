@@ -48,7 +48,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
 
             var items = new List<DataInstance>();
             if (caseDetails.ReportItems != null)
-                items.AddRange(caseDetails.ReportItems.Select(i => new DataInstance() { Caption = i, Name = "ReportText", Values = new string[] { i } }));
+                items.AddRange(caseDetails.ReportItems.Select(i => new DataInstance() { Caption = i.Text, Name = "ReportText", Values = new string[] { i.Text } }));
 
             if (caseDetails.ConsultationSummaryItems != null)
                 items.AddRange(caseDetails.ConsultationSummaryItems.Select(c => new DataInstance() { Caption = c, Name = "DispositionDisplayText", Values = new string[] { c } }));
