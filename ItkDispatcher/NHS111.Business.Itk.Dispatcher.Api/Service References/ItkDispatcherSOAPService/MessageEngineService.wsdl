@@ -43,6 +43,8 @@
         <xs:sequence>
           <xs:element minOccurs="0" name="ExternalReference" type="xs:string" />
           <xs:element minOccurs="0" name="Source" type="xs:string" />
+          <xs:element minOccurs="0" name="condition" type="xs:string" />
+          <xs:element minOccurs="0" name="conditionType" type="xs:string" />
           <xs:element name="DispositionCode" type="xs:string" />
           <xs:element name="DispositionName" type="xs:string" />
           <xs:element minOccurs="0" name="CaseSummary">
@@ -97,6 +99,7 @@
           <xs:element minOccurs="0" name="Forename" type="xs:string" />
           <xs:element minOccurs="0" name="Surname" type="xs:string" />
           <xs:element name="DateOfBirth" type="tns:DateOfBirth" />
+          <xs:element minOccurs="0" name="AgeGroup" type="xs:string" />
           <xs:element name="Gender" type="tns:gender" />
           <xs:element minOccurs="0" name="NhsNumber" type="xs:string" />
           <xs:element name="InformantType" type="tns:informantType" />
@@ -707,7 +710,7 @@
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="MessageEngineService">
-    <wsdl:documentation>MessageEngine WSDL Specification 1.5.1</wsdl:documentation>
+    <wsdl:documentation>MessageEngine WSDL Specification 2.0.0</wsdl:documentation>
     <wsdl:port name="MessageEnginePort" binding="tns:MessageEngineServiceSoapBinding">
       <soap:address location="https://localhost/LIVE/MessageEngine/V1.5/" />
     </wsdl:port>

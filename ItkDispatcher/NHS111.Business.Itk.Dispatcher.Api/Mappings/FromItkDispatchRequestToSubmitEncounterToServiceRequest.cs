@@ -35,6 +35,8 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
                 .ForMember(dest => dest.CaseSummary, opt => opt.Condition(src => src.ReportItems != null || src.ConsultationSummaryItems != null))
                 .ForMember(dest => dest.CaseSummary, opt => opt.ResolveUsing(ResolveCaseSummary))
                 .ForMember(dest => dest.CaseSteps, opt => opt.ResolveUsing(ResolveCaseSteps))
+                .ForMember(dest => dest.condition, opt => opt.MapFrom(src => src.StartingPathwayId))
+                .ForMember(dest => dest.conditionType, opt => opt.MapFrom(src => src.IsStartingPathwayTrauma))
                 .ForMember(dest => dest.Provider, opt => opt.Ignore())
                 .ForMember(dest => dest.UnstructuredData, opt => opt.Ignore());
 
@@ -78,6 +80,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
 
             gender gender = Enum.TryParse(source.Gender, out gender) ? gender : gender.Not_Known;
             submitPatientservice.Gender = gender;
+            submitPatientservice.AgeGroup = source.AgeGroup;
 
             submitPatientservice.DateOfBirth = new DateOfBirth() {Item = source.DateOfBirth.ToString("yyyy-MM-dd")};
 

@@ -1893,6 +1893,10 @@ namespace NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService {
         
         private string sourceField;
         
+        private string conditionField;
+        
+        private string conditionTypeField;
+        
         private string dispositionCodeField;
         
         private string dispositionNameField;
@@ -1931,6 +1935,30 @@ namespace NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
+        public string condition {
+            get {
+                return this.conditionField;
+            }
+            set {
+                this.conditionField = value;
+                this.RaisePropertyChanged("condition");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
+        public string conditionType {
+            get {
+                return this.conditionTypeField;
+            }
+            set {
+                this.conditionTypeField = value;
+                this.RaisePropertyChanged("conditionType");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
         public string DispositionCode {
             get {
                 return this.dispositionCodeField;
@@ -1942,7 +1970,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=5)]
         public string DispositionName {
             get {
                 return this.dispositionNameField;
@@ -1954,7 +1982,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
+        [System.Xml.Serialization.XmlArrayAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=6)]
         [System.Xml.Serialization.XmlArrayItemAttribute("SummaryItem", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, IsNullable=false)]
         public DataInstance[] CaseSummary {
             get {
@@ -1967,7 +1995,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=5)]
+        [System.Xml.Serialization.XmlArrayAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=7)]
         [System.Xml.Serialization.XmlArrayItemAttribute("StepItem", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, IsNullable=false)]
         public stepInstance[] CaseSteps {
             get {
@@ -1980,7 +2008,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=6)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=8)]
         public string Provider {
             get {
                 return this.providerField;
@@ -1992,7 +2020,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=7)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=9)]
         public string UnstructuredData {
             get {
                 return this.unstructuredDataField;
@@ -2174,6 +2202,8 @@ namespace NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService {
         
         private DateOfBirth dateOfBirthField;
         
+        private string ageGroupField;
+        
         private gender genderField;
         
         private string nhsNumberField;
@@ -2226,6 +2256,18 @@ namespace NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
+        public string AgeGroup {
+            get {
+                return this.ageGroupField;
+            }
+            set {
+                this.ageGroupField = value;
+                this.RaisePropertyChanged("AgeGroup");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
         public gender Gender {
             get {
                 return this.genderField;
@@ -2237,7 +2279,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=5)]
         public string NhsNumber {
             get {
                 return this.nhsNumberField;
@@ -2249,7 +2291,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=5)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=6)]
         public informantType InformantType {
             get {
                 return this.informantTypeField;
@@ -2261,7 +2303,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=6)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=7)]
         public string InformantName {
             get {
                 return this.informantNameField;
@@ -2273,7 +2315,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=7)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=8)]
         public Address CurrentAddress {
             get {
                 return this.currentAddressField;
@@ -2285,7 +2327,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=8)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=9)]
         public Address HomeAddress {
             get {
                 return this.homeAddressField;
@@ -2297,7 +2339,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=9)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=10)]
         public GPPractice GpPractice {
             get {
                 return this.gpPracticeField;

@@ -37,6 +37,7 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Mappers
         public const string TEST_EXTERNAL_REF = "REF_123456";
         public const string TEST_DX_CODE = "DX0123";
         public const string TEST_DX_NAME = "Rashes";
+        public const string TEST_CONDITION = "PA123MaleAdult";
 
 
         [SetUp]
@@ -72,6 +73,7 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Mappers
                     Forename = TEST_PATIENT_FORENAME,
                     Surname = TEST_PATIENT_SURNAME,
                     Gender = "Female",
+                    AgeGroup = "Adult",
                     GpPractice = new GpPractice()
                     {
                         Address = new Address()
@@ -107,7 +109,9 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Mappers
                 {
                     ExternalReference = TEST_EXTERNAL_REF,
                     DispositionCode = TEST_DX_CODE,
-                    DispositionName = TEST_DX_NAME
+                    DispositionName = TEST_DX_NAME,
+                    StartingPathwayId = TEST_CONDITION,
+                    IsStartingPathwayTrauma = false
                 }
             };
 
@@ -121,6 +125,7 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Mappers
             Assert.AreEqual(result.PatientDetails.Forename, TEST_PATIENT_FORENAME);
             Assert.AreEqual(result.PatientDetails.Surname, TEST_PATIENT_SURNAME);
             Assert.AreEqual(result.PatientDetails.Gender, gender.Female);
+            Assert.AreEqual(result.PatientDetails.AgeGroup, "Adult");
             Assert.AreEqual(result.PatientDetails.DateOfBirth.Item, "1980-11-30");
 
             Assert.AreEqual(result.PatientDetails.InformantType, informantType.Self);
@@ -143,6 +148,8 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Mappers
             Assert.AreEqual(result.CaseDetails.ExternalReference, TEST_EXTERNAL_REF);
             Assert.AreEqual(result.CaseDetails.DispositionCode, TEST_DX_CODE);
             Assert.AreEqual(result.CaseDetails.DispositionName, TEST_DX_NAME);
+            Assert.AreEqual(result.CaseDetails.condition, TEST_CONDITION);
+            Assert.AreEqual(result.CaseDetails.conditionType, "False");
         }
 
         [Test]
