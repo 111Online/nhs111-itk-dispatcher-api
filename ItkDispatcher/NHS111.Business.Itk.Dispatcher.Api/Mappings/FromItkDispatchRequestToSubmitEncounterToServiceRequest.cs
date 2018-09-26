@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using KafkaNet.Protocol;
+using Newtonsoft.Json;
 using NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService;
 using NHS111.Domain.Itk.Dispatcher.Models;
 using Address = NHS111.Domain.Itk.Dispatcher.Models.Address;
@@ -32,13 +33,16 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
                 .ForMember(dest => dest.CaseDetails, opt => opt.MapFrom(src => src.CaseDetails));
 
             CreateMap<CaseDetails, SubmitToCallQueueDetails>()
-                .ForMember(dest => dest.CaseSummary, opt => opt.Condition(src => src.ReportItems != null || src.ConsultationSummaryItems != null))
+                .ForMember(dest => dest.CaseSummary,
+                    opt => opt.Condition(src => src.ReportItems != null || src.ConsultationSummaryItems != null))
                 .ForMember(dest => dest.CaseSummary, opt => opt.ResolveUsing(ResolveCaseSummary))
                 .ForMember(dest => dest.CaseSteps, opt => opt.ResolveUsing(ResolveCaseSteps))
-                .ForMember(dest => dest.condition, opt => opt.MapFrom(src => src.StartingPathwayId))
-                .ForMember(dest => dest.conditionType, opt => opt.MapFrom(src => src.IsStartingPathwayTrauma))
+                .ForMember(dest => dest.conditionTitle, opt => opt.MapFrom(src => src.StartingPathwayTitle))
+                .ForMember(dest => dest.conditionId, opt => opt.MapFrom(src => src.StartingPathwayId))
+                .ForMember(dest => dest.conditionType, opt => opt.MapFrom(src => src.StartingPathwayType))
+                .ForMember(dest => dest.UnstructuredData, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.SetVariables)))
                 .ForMember(dest => dest.Provider, opt => opt.Ignore())
-                .ForMember(dest => dest.UnstructuredData, opt => opt.Ignore());
+                .ForMember(dest => dest.Source, opt => opt.Ignore());
 
             CreateMap<PatientDetails, SubmitPatientService>()
                 .ConvertUsing<FromPatientDetailsTSubmitPatientServiceConverter>();

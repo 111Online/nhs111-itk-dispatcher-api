@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
+using Newtonsoft.Json;
 using NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService;
 using NHS111.Business.Itk.Dispatcher.Api.Mappings;
 using NHS111.Domain.Itk.Dispatcher.Models;
@@ -37,7 +39,15 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Mappers
         public const string TEST_EXTERNAL_REF = "REF_123456";
         public const string TEST_DX_CODE = "DX0123";
         public const string TEST_DX_NAME = "Rashes";
-        public const string TEST_CONDITION = "PA123MaleAdult";
+        public const string TEST_CONDITION = "Skin problems";
+        public const string TEST_CONDITIONID = "PA123MaleAdult";
+        public const string TEST_CONDITIONTYPE = "Trauma";
+
+        public readonly IDictionary<string, string> TestSetVariables = new Dictionary<string, string>
+        {
+            {"PATIENT_AGE", "18"}, {"PATIENT_GENDER", "\"M\""}, {"PATIENT_PARTY", "1"}, {"PATIENT_AGEGROUP", "Adult"},
+            {"SYSTEM_ONLINE", "online"}
+        };
 
 
         [SetUp]
@@ -110,8 +120,10 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Mappers
                     ExternalReference = TEST_EXTERNAL_REF,
                     DispositionCode = TEST_DX_CODE,
                     DispositionName = TEST_DX_NAME,
-                    StartingPathwayId = TEST_CONDITION,
-                    IsStartingPathwayTrauma = false
+                    StartingPathwayTitle = TEST_CONDITION,
+                    StartingPathwayId = TEST_CONDITIONID,
+                    StartingPathwayType = TEST_CONDITIONTYPE,
+                    SetVariables = TestSetVariables
                 }
             };
 
@@ -148,8 +160,10 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Mappers
             Assert.AreEqual(result.CaseDetails.ExternalReference, TEST_EXTERNAL_REF);
             Assert.AreEqual(result.CaseDetails.DispositionCode, TEST_DX_CODE);
             Assert.AreEqual(result.CaseDetails.DispositionName, TEST_DX_NAME);
-            Assert.AreEqual(result.CaseDetails.condition, TEST_CONDITION);
-            Assert.AreEqual(result.CaseDetails.conditionType, "False");
+            Assert.AreEqual(result.CaseDetails.conditionTitle, TEST_CONDITION);
+            Assert.AreEqual(result.CaseDetails.conditionId, TEST_CONDITIONID);
+            Assert.AreEqual(result.CaseDetails.conditionType, TEST_CONDITIONTYPE);
+            Assert.AreEqual(result.CaseDetails.UnstructuredData, JsonConvert.SerializeObject(TestSetVariables));
         }
 
         [Test]
