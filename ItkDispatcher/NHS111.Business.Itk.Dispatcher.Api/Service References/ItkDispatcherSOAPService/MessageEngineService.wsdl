@@ -43,7 +43,8 @@
         <xs:sequence>
           <xs:element minOccurs="0" name="ExternalReference" type="xs:string" />
           <xs:element minOccurs="0" name="Source" type="xs:string" />
-          <xs:element minOccurs="0" name="condition" type="xs:string" />
+          <xs:element minOccurs="0" name="conditionTitle" type="xs:string" />
+          <xs:element minOccurs="0" name="conditionId" type="xs:string" />
           <xs:element minOccurs="0" name="conditionType" type="xs:string" />
           <xs:element name="DispositionCode" type="xs:string" />
           <xs:element name="DispositionName" type="xs:string" />
