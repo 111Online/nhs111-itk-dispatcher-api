@@ -1,9 +1,12 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Xml;
+using System.Xml.Serialization;
 using AutoMapper;
 using Newtonsoft.Json;
 using NHS111.Business.Itk.Dispatcher.Api.Builders;
@@ -37,6 +40,18 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Controllers
 
             BypassCertificateError();
             var submitHaSCToService = AutoMapperWebConfiguration.Mapper.Map<ItkDispatchRequest, SubmitHaSCToService>(request);
+
+#if DEBUG
+            var xsSubmit = new XmlSerializer(typeof(SubmitHaSCToService));
+            using (var sww = new StringWriter())
+            {
+                using (var writer = XmlWriter.Create(sww))
+                {
+                    xsSubmit.Serialize(writer, submitHaSCToService);
+                    var xml = sww.ToString();
+                }
+            }
+#endif
             SubmitHaSCToServiceResponse itkResponse = null;
             try {
                 itkResponse = await _itkDispatcher.SubmitHaSCToServiceAsync(submitHaSCToService);
