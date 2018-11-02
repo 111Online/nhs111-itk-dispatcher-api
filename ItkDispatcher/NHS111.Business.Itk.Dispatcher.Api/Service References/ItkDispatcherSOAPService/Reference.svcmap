@@ -19,10 +19,10 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="https://servicebus.nhsdirect.nhs.uk/LIVE/MessageEngine/V1.5/?wsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address="https://localhost:443/LIVE/MessageEngine/V1.5/?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="MessageEngineService.wsdl" MetadataType="Wsdl" ID="726a9f0c-5c28-4c10-9f16-50bee4fa8049" SourceId="1" SourceUrl="https://servicebus.nhsdirect.nhs.uk/LIVE/MessageEngine/V1.5/?wsdl" />
+    <MetadataFile FileName="MessageEngineService.wsdl" MetadataType="Wsdl" ID="62708684-6321-4209-8e21-abae86c09e9a" SourceId="1" SourceUrl="https://localhost/LIVE/MessageEngine/V1.5/?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

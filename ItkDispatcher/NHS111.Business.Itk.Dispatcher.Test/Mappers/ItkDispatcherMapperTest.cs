@@ -92,10 +92,24 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Mappers
         }
 
         [Test]
+        public void Map_ITKDispatchRequest_To_ToSubmitHaSCToService_without_ReportText()
+        {
+            var requestWithReportItems = _basicRequest;
+            
+            var result = _mapper.Map<ItkDispatchRequest, SubmitHaSCToService>(requestWithReportItems);
+
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Authentication);
+            Assert.IsNotNull(result.SubmitEncounterToServiceRequest);
+            Assert.IsNotNull(result.SubmitEncounterToServiceRequest.CaseDetails);
+            Assert.IsNull(result.SubmitEncounterToServiceRequest.CaseDetails.CaseSummary);
+        }
+
+        [Test]
         public void Map_ITKDispatchRequest_To_ToSubmitHaSCToService_with_ReportText()
         {
             var requestWithReportItems = _basicRequest;
-            requestWithReportItems.CaseDetails.ReportItems = new List<string>() {"Report line 1", "Report line 2"};
+            requestWithReportItems.CaseDetails.ReportItems = new List<ReportItem>() { new ReportItem { Text = "Report line 1", Positive = false }, new ReportItem { Text = "Report line  2", Positive = true } };
 
             var result = _mapper.Map<ItkDispatchRequest, SubmitHaSCToService>(requestWithReportItems);
 
@@ -109,6 +123,21 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Mappers
             Assert.IsTrue(result.SubmitEncounterToServiceRequest.CaseDetails.CaseSummary.Any(c => c.Name == "ReportText"), "CaseDetails does not contain summary item with a name of 'ReportText'");
             Assert.AreEqual("Report line 1", result.SubmitEncounterToServiceRequest.CaseDetails.CaseSummary.Where(c => c.Name == "ReportText").First().Values[0]);
 
+        }
+
+        [Test]
+        public void Map_ITKDispatchRequest_To_ToSubmitHaSCToService_with_empty_ReportText()
+        {
+            var requestWithReportItems = _basicRequest;
+            requestWithReportItems.CaseDetails.ReportItems = new List<ReportItem>();
+
+            var result = _mapper.Map<ItkDispatchRequest, SubmitHaSCToService>(requestWithReportItems);
+
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Authentication);
+            Assert.IsNotNull(result.SubmitEncounterToServiceRequest);
+            Assert.IsNotNull(result.SubmitEncounterToServiceRequest.CaseDetails);
+            Assert.AreEqual(0, result.SubmitEncounterToServiceRequest.CaseDetails.CaseSummary.Count());
         }
 
         [Test]
@@ -138,6 +167,36 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Mappers
             var result = _mapper.Map<ItkDispatchRequest, SubmitHaSCToService>(_basicRequest);
             Assert.IsNotNull(result);
             Assert.IsNull(result.SubmitEncounterToServiceRequest.CaseDetails.CaseSummary);
+        }
+
+        [Test]
+        public void Map_ITKDispatchRequest_To_ToSubmitHaSCToService_with_StepItems()
+        {
+            var requestWithReportItems = _basicRequest;
+            requestWithReportItems.CaseDetails.CaseSteps = new List<StepItem>
+            {
+                new StepItem { QuestionId = "q1", AnswerOrder = 0 },
+                new StepItem { QuestionId = "q2", AnswerOrder = 2 },
+            };
+
+            var result = _mapper.Map<ItkDispatchRequest, SubmitHaSCToService>(requestWithReportItems);
+
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Authentication);
+            Assert.IsNotNull(result.SubmitEncounterToServiceRequest);
+            Assert.IsNotNull(result.SubmitEncounterToServiceRequest.CaseDetails);
+            Assert.AreEqual(2, result.SubmitEncounterToServiceRequest.CaseDetails.CaseSteps.Count());
+
+            Assert.AreEqual("q1", result.SubmitEncounterToServiceRequest.CaseDetails.CaseSteps.First().QuestionId);
+            Assert.AreEqual("q2", result.SubmitEncounterToServiceRequest.CaseDetails.CaseSteps.Skip(1).First().QuestionId);
+        }
+
+        [Test]
+        public void Map_ITKDispatchRequest_To_ToSubmitHaSCToService_With_Null_StepItems()
+        {
+            var result = _mapper.Map<ItkDispatchRequest, SubmitHaSCToService>(_basicRequest);
+            Assert.IsNotNull(result);
+            Assert.IsEmpty(result.SubmitEncounterToServiceRequest.CaseDetails.CaseSteps);
         }
 
     }
