@@ -192,6 +192,22 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Mappers
         }
 
         [Test]
+        public void Map_ITKDispatchRequest_To_ToSubmitHaSCToService_with_StepItems_Correct_Case_QuestionId()
+        {
+            var requestWithReportItems = _basicRequest;
+            requestWithReportItems.CaseDetails.CaseSteps = new List<StepItem>
+            {
+                new StepItem { QuestionId = "TX1234", AnswerOrder = 0 },
+                new StepItem { QuestionId = "TX5678", AnswerOrder = 2 },
+            };
+
+            var result = _mapper.Map<ItkDispatchRequest, SubmitHaSCToService>(requestWithReportItems);
+
+            Assert.AreEqual("Tx1234", result.SubmitEncounterToServiceRequest.CaseDetails.CaseSteps.First().QuestionId);
+            Assert.AreEqual("Tx5678", result.SubmitEncounterToServiceRequest.CaseDetails.CaseSteps.Skip(1).First().QuestionId);
+        }
+
+        [Test]
         public void Map_ITKDispatchRequest_To_ToSubmitHaSCToService_With_Null_StepItems()
         {
             var result = _mapper.Map<ItkDispatchRequest, SubmitHaSCToService>(_basicRequest);
