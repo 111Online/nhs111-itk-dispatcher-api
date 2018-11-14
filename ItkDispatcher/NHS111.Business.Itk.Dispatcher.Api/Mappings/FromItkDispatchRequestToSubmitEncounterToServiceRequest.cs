@@ -66,7 +66,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
         {
             var items = new List<stepInstance>();
             if (caseDetails.CaseSteps != null)
-                items.AddRange(caseDetails.CaseSteps.Select(i => new stepInstance() { QuestionId = i.QuestionId.Replace("TX", "Tx"), AnswerOrder = i.AnswerOrder }));
+                items.AddRange(caseDetails.CaseSteps.Select(i => new stepInstance() { QuestionId = i.QuestionId, AnswerOrder = i.AnswerOrder }));
 
             return items.ToArray();
         }
