@@ -105,7 +105,9 @@
     <Compile Include="Models\ItkDispatchResponse.cs" />
     <Compile Include="Models\JourneyHash.cs" />
     <Compile Include="Models\PatientDetails.cs" />
+    <Compile Include="Models\ReportItem.cs" />
     <Compile Include="Models\ServiceDetails.cs" />
+    <Compile Include="Models\StepItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AzureStorageService.cs" />
     <Compile Include="Services\MessageService.cs" />

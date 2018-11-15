@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using KafkaNet.Protocol;
+using Newtonsoft.Json;
 using NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService;
 using NHS111.Domain.Itk.Dispatcher.Models;
 using Address = NHS111.Domain.Itk.Dispatcher.Models.Address;
@@ -32,26 +33,41 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
                 .ForMember(dest => dest.CaseDetails, opt => opt.MapFrom(src => src.CaseDetails));
 
             CreateMap<CaseDetails, SubmitToCallQueueDetails>()
-                .ForMember(dest => dest.CaseSummary, opt => opt.Condition(src => src.ReportItems != null || src.ConsultationSummaryItems != null))
-                .ForMember(dest => dest.CaseSummary, opt => opt.ResolveUsing(src => Resolve(src)))
-                .ForMember(dest => dest.Provider, opt => opt.Ignore());
+                .ForMember(dest => dest.CaseSummary,
+                    opt => opt.Condition(src => src.ReportItems != null || src.ConsultationSummaryItems != null))
+                .ForMember(dest => dest.CaseSummary, opt => opt.ResolveUsing(ResolveCaseSummary))
+                .ForMember(dest => dest.CaseSteps, opt => opt.ResolveUsing(ResolveCaseSteps))
+                .ForMember(dest => dest.conditionTitle, opt => opt.MapFrom(src => src.StartingPathwayTitle))
+                .ForMember(dest => dest.conditionId, opt => opt.MapFrom(src => src.StartingPathwayId))
+                .ForMember(dest => dest.conditionType, opt => opt.MapFrom(src => src.StartingPathwayType))
+                .ForMember(dest => dest.UnstructuredData, opt => opt.MapFrom(src => JsonConvert.SerializeObject(src.SetVariables)))
+                .ForMember(dest => dest.Provider, opt => opt.Ignore())
+                .ForMember(dest => dest.Source, opt => opt.Ignore());
 
             CreateMap<PatientDetails, SubmitPatientService>()
                 .ConvertUsing<FromPatientDetailsTSubmitPatientServiceConverter>();
         }
 
-
-        private DataInstance[] Resolve(CaseDetails caseDetails)
+        private static DataInstance[] ResolveCaseSummary(CaseDetails caseDetails)
         {
             if (caseDetails.ConsultationSummaryItems == null && caseDetails.ReportItems == null) return null;
 
             var items = new List<DataInstance>();
             if (caseDetails.ReportItems != null)
-                items.AddRange(caseDetails.ReportItems.Select(i => new DataInstance() { Caption = i, Name = "ReportText", Values = new string[] { i } }));
+                items.AddRange(caseDetails.ReportItems.Select(i => new DataInstance() { Caption = i.Text, Name = "ReportText", Values = new string[] { i.Text } }));
 
             if (caseDetails.ConsultationSummaryItems != null)
                 items.AddRange(caseDetails.ConsultationSummaryItems.Select(c => new DataInstance() { Caption = c, Name = "DispositionDisplayText", Values = new string[] { c } }));
             
+            return items.ToArray();
+        }
+
+        private static stepInstance[] ResolveCaseSteps(CaseDetails caseDetails)
+        {
+            var items = new List<stepInstance>();
+            if (caseDetails.CaseSteps != null)
+                items.AddRange(caseDetails.CaseSteps.Select(i => new stepInstance() { QuestionId = i.QuestionId, AnswerOrder = i.AnswerOrder }));
+
             return items.ToArray();
         }
     }
@@ -68,6 +84,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
 
             gender gender = Enum.TryParse(source.Gender, out gender) ? gender : gender.Not_Known;
             submitPatientservice.Gender = gender;
+            submitPatientservice.AgeGroup = source.AgeGroup;
 
             submitPatientservice.DateOfBirth = new DateOfBirth() {Item = source.DateOfBirth.ToString("yyyy-MM-dd")};
 
@@ -80,7 +97,9 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
 
             informantType informant = Enum.TryParse(source.Informant.Type.ToString(), out informant) ? informant : informantType.NotSpecified;
             submitPatientservice.InformantType = informant;
-            submitPatientservice.InformantName = string.Format("{0} {1}", source.Informant.Forename, source.Informant.Surname);
+
+            if (!string.IsNullOrEmpty(source.Informant.Forename) || !string.IsNullOrEmpty(source.Informant.Surname))
+                submitPatientservice.InformantName = string.Format("{0} {1}", source.Informant.Forename, source.Informant.Surname);
 
             return submitPatientservice;
         }
