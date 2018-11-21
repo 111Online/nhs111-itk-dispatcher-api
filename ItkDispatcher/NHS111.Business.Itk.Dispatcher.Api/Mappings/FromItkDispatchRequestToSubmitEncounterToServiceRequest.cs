@@ -98,7 +98,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
             informantType informant = Enum.TryParse(source.Informant.Type.ToString(), out informant) ? informant : informantType.NotSpecified;
             submitPatientservice.InformantType = informant;
 
-            if (!string.IsNullOrEmpty(source.Informant.Forename) || !string.IsNullOrEmpty(source.Informant.Surname))
+            //if (!string.IsNullOrEmpty(source.Informant.Forename) || !string.IsNullOrEmpty(source.Informant.Surname))
                 submitPatientservice.InformantName = string.Format("{0} {1}", source.Informant.Forename, source.Informant.Surname);
 
             return submitPatientservice;
