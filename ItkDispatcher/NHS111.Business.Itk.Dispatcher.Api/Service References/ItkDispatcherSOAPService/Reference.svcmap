@@ -19,10 +19,10 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="https://localhost:443/LIVE/MessageEngine/V1.5/?wsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address="C:\Work\WSDL.xml" Protocol="file" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="MessageEngineService.wsdl" MetadataType="Wsdl" ID="62708684-6321-4209-8e21-abae86c09e9a" SourceId="1" SourceUrl="https://localhost/LIVE/MessageEngine/V1.5/?wsdl" />
+    <MetadataFile FileName="MessageEngineService.wsdl" MetadataType="Wsdl" ID="cdb2cb11-f440-4f55-82f7-700211b8b58b" SourceId="1" SourceUrl="file:///C:/Work/WSDL.xml" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
