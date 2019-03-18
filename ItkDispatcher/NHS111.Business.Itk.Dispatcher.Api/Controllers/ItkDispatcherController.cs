@@ -38,7 +38,6 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Controllers
             var messageExists = _messageService.MessageAlreadyExists(request.CaseDetails.ExternalReference, JsonConvert.SerializeObject(request));
             if (messageExists) return _itkDispatchResponseBuilder.Build(new DuplicateMessageException("This message has already been successfully submitted"));
 
-            BypassCertificateError();
             var submitHaSCToService = AutoMapperWebConfiguration.Mapper.Map<ItkDispatchRequest, SubmitHaSCToService>(request);
 
 #if DEBUG
@@ -65,23 +64,6 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Controllers
                 _messageService.StoreMessage(request.CaseDetails.ExternalReference, JsonConvert.SerializeObject(request));
 
             return response;
-        }
-
-        /// <summary>
-        /// Temorary sssl cert validation bypass until ESB hosting has domain name
-        /// </summary>
-        private static void BypassCertificateError()
-        {
-            ServicePointManager.ServerCertificateValidationCallback +=
-
-                delegate(
-                    Object sender1,
-                    X509Certificate certificate,
-                    X509Chain chain,
-                    SslPolicyErrors sslPolicyErrors)
-                {
-                    return true;
-                };
         }
     }
 }
