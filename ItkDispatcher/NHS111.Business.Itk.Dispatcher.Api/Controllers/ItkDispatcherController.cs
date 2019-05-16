@@ -23,12 +23,14 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Controllers
         private readonly MessageEngine _itkDispatcher;
         private readonly IItkDispatchResponseBuilder _itkDispatchResponseBuilder;
         private readonly IMessageService _messageService;
+        private readonly IPatientReferenceService _patientReferenceService;
 
-        public ItkDispatcherController(MessageEngine itkDispatcher, IItkDispatchResponseBuilder itkDispatchResponseBuilder, IMessageService messageService)
+        public ItkDispatcherController(MessageEngine itkDispatcher, IItkDispatchResponseBuilder itkDispatchResponseBuilder, IMessageService messageService, IPatientReferenceService patientReferenceService)
         {
             _itkDispatcher = itkDispatcher;
             _itkDispatchResponseBuilder = itkDispatchResponseBuilder;
             _messageService = messageService;
+            _patientReferenceService = patientReferenceService;
         }
 
         [HttpPost]
@@ -38,6 +40,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Controllers
             var messageExists = _messageService.MessageAlreadyExists(request.CaseDetails.ExternalReference, JsonConvert.SerializeObject(request));
             if (messageExists) return _itkDispatchResponseBuilder.Build(new DuplicateMessageException("This message has already been successfully submitted"));
 
+            var patientRef = _patientReferenceService.BuildReference(request.CaseDetails);
             var submitHaSCToService = AutoMapperWebConfiguration.Mapper.Map<ItkDispatchRequest, SubmitHaSCToService>(request);
 
 #if DEBUG
@@ -59,7 +62,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Controllers
                 return _itkDispatchResponseBuilder.Build(ex);
             }
 
-            var response = _itkDispatchResponseBuilder.Build(itkResponse);
+            var response = _itkDispatchResponseBuilder.Build(itkResponse, patientRef);
             if(response.IsSuccessStatusCode)
                 _messageService.StoreMessage(request.CaseDetails.ExternalReference, JsonConvert.SerializeObject(request));
 

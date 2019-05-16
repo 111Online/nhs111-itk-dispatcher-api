@@ -21,6 +21,13 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Builders {
             };
         }
 
+        public ItkDispatchResponse Build(SubmitHaSCToServiceResponse submitHaScToServiceResponse, string patientRef)
+        {
+            var response = Build(submitHaScToServiceResponse);
+            response.Content = new StringContent(patientRef);
+            return response;
+        }
+
         // Suggest mapping this an automapper mapping: submitEncounterToServiceResponseOverallStatus -> HttpStatusCode
         private HttpStatusCode DetermineSuccess(submitEncounterToServiceResponseOverallStatus responseStatus) {
             if (responseStatus == SUCCESS_RESPONSE) return HttpStatusCode.OK;
@@ -44,6 +51,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Builders {
 
     public interface IItkDispatchResponseBuilder {
         ItkDispatchResponse Build(SubmitHaSCToServiceResponse submitHaScToServiceResponse);
+        ItkDispatchResponse Build(SubmitHaSCToServiceResponse submitHaScToServiceResponse, string patientRef);
         ItkDispatchResponse Build(Exception exception);
     }
 }
