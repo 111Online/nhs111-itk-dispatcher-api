@@ -13,7 +13,7 @@ namespace NHS111.Domain.Itk.Dispatcher.Services
         public string BuildReference(CaseDetails caseDetails)
         {
             var JourneyId = caseDetails.ExternalReference;
-            var partJourneyId = JourneyId.Substring(0,6).ToUpper();
+            var partJourneyId = JourneyId.Substring(0,5).ToUpper();
             return String.Format("{0}{1}", REF_PREFIX, partJourneyId);
         }
     }
