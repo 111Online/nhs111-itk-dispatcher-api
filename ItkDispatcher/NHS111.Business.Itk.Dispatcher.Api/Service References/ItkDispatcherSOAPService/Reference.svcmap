@@ -19,10 +19,10 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:8088/mockMessageEngineServiceSoapBinding?WSDL" Protocol="http" SourceId="1" />
+    <MetadataSource Address="https://localhost:443/LIVE/MessageEngine/V1.5/?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="MessageEngineService1.wsdl" MetadataType="Wsdl" ID="9d6d0153-90a7-4441-9685-69496524124d" SourceId="1" SourceUrl="http://localhost:8088/mockMessageEngineServiceSoapBinding?WSDL" />
+    <MetadataFile FileName="MessageEngineService.wsdl" MetadataType="Wsdl" ID="9d6d0153-90a7-4441-9685-69496524124d" SourceId="1" SourceUrl="https://localhost:443/LIVE/MessageEngine/V1.5/?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
