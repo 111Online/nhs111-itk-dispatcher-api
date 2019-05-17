@@ -714,7 +714,7 @@
   <wsdl:service name="MessageEngineService">
     <wsdl:documentation>MessageEngine WSDL Specification 2.1.0</wsdl:documentation>
     <wsdl:port name="MessageEnginePort" binding="tns:MessageEngineServiceSoapBinding">
-      <soap:address location="http://HCDEVLAP225:8088/mockMessageEngineServiceSoapBinding" />
+      <soap:address location="https://localhost/LIVE/MessageEngine/V1.5/" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
