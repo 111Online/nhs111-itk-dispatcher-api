@@ -40,7 +40,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Controllers
             var messageExists = _messageService.MessageAlreadyExists(request.CaseDetails.ExternalReference, JsonConvert.SerializeObject(request));
             if (messageExists) return _itkDispatchResponseBuilder.Build(new DuplicateMessageException("This message has already been successfully submitted"));
 
-            var patientRef = _patientReferenceService.BuildReference(request.CaseDetails);
+            request.CaseDetails.ExternalReference = _patientReferenceService.BuildReference(request.CaseDetails);
             var submitHaSCToService = AutoMapperWebConfiguration.Mapper.Map<ItkDispatchRequest, SubmitHaSCToService>(request);
 
 #if DEBUG
@@ -62,7 +62,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Controllers
                 return _itkDispatchResponseBuilder.Build(ex);
             }
 
-            var response = _itkDispatchResponseBuilder.Build(itkResponse, patientRef);
+            var response = _itkDispatchResponseBuilder.Build(itkResponse, request.CaseDetails.ExternalReference);
             if(response.IsSuccessStatusCode)
                 _messageService.StoreMessage(request.CaseDetails.ExternalReference, JsonConvert.SerializeObject(request));
 

@@ -280,7 +280,7 @@
     <Content Include="Service References\ItkDispatcherSOAPService\NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService.VerifyPatientResponse1.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <None Include="Service References\ItkDispatcherSOAPService\MessageEngineService.wsdl" />
+    <None Include="Service References\ItkDispatcherSOAPService\MessageEngineService1.wsdl" />
     <None Include="Service References\ItkDispatcherSOAPService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
