@@ -37,11 +37,12 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Controllers
         [Route("SendItkMessage")]
         public async Task<ItkDispatchResponse> SendItkMessage(ItkDispatchRequest request)
         {
-            var messageExists = _messageService.MessageAlreadyExists(request.CaseDetails.ExternalReference, JsonConvert.SerializeObject(request));
+            request.CaseDetails.ExternalReference = _patientReferenceService.BuildReference(request.CaseDetails);
+            var messageExists = _messageService.MessageAlreadyExists(request.CaseDetails.JourneyId, JsonConvert.SerializeObject(request));
             if (messageExists) return _itkDispatchResponseBuilder.Build(new DuplicateMessageException("This message has already been successfully submitted"));
 
-            request.CaseDetails.ExternalReference = _patientReferenceService.BuildReference(request.CaseDetails);
             var submitHaSCToService = AutoMapperWebConfiguration.Mapper.Map<ItkDispatchRequest, SubmitHaSCToService>(request);
+           
 
 #if DEBUG
             var xsSubmit = new XmlSerializer(typeof(SubmitHaSCToService));
@@ -64,7 +65,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Controllers
 
             var response = _itkDispatchResponseBuilder.Build(itkResponse, request.CaseDetails.ExternalReference);
             if(response.IsSuccessStatusCode)
-                _messageService.StoreMessage(request.CaseDetails.ExternalReference, JsonConvert.SerializeObject(request));
+                _messageService.StoreMessage(request.CaseDetails.JourneyId, JsonConvert.SerializeObject(request));
 
             return response;
         }

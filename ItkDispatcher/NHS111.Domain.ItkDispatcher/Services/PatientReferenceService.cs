@@ -12,8 +12,8 @@ namespace NHS111.Domain.Itk.Dispatcher.Services
         private const string REF_PREFIX = "111-ONLINE-";
         public string BuildReference(CaseDetails caseDetails)
         {
-            var JourneyId = caseDetails.ExternalReference;
-            var partJourneyId = JourneyId.Substring(0,5).ToUpper();
+            if(String.IsNullOrEmpty(caseDetails.JourneyId)) throw new ArgumentException("caseDetails does not contain a journeyId");
+            var partJourneyId = caseDetails.JourneyId.Substring(0,5).ToUpper();
             return String.Format("{0}{1}", REF_PREFIX, partJourneyId);
         }
     }
