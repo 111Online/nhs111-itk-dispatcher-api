@@ -2,6 +2,7 @@
 using System.Net;
 using NHS111.Business.Itk.Dispatcher.Api.Builders;
 using NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService;
+using NHS111.Domain.Itk.Dispatcher.Exceptions;
 using NUnit.Framework;
 
 
@@ -69,6 +70,16 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Builders {
             var result = _responseBuilder.Build(new Exception());
 
             Assert.AreEqual("An error has occured processing the request.", result.Body);
+            Assert.AreEqual(HttpStatusCode.InternalServerError, result.StatusCode);
+        }
+
+        [Test]
+        public void Build_WithDuplicateException_BuildsFaultResponse()
+        {
+            var result = _responseBuilder.Build(new DuplicateMessageException("Duplicate"));
+
+            Assert.AreEqual("An error has occured processing the request.", result.Body);
+            Assert.AreEqual(HttpStatusCode.Conflict, result.StatusCode);
         }
     }
 }
