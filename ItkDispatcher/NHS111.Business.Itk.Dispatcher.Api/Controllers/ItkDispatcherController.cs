@@ -49,7 +49,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Controllers
             if (messageExists)
             {
                 _logger.Error(string.Format("Duplicate Case sent of JourneyId {0} and external ref {1}", request.CaseDetails.JourneyId, request.CaseDetails.ExternalReference));
-                return _itkDispatchResponseBuilder.Build(new DuplicateMessageException("This message has already been successfully submitted"));
+                return _itkDispatchResponseBuilder.Build(new DuplicateMessageException(request.CaseDetails.ExternalReference));
             }
 
             var submitHaSCToService = AutoMapperWebConfiguration.Mapper.Map<ItkDispatchRequest, SubmitHaSCToService>(request);

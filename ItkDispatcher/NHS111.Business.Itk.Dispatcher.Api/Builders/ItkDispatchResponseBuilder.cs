@@ -36,13 +36,17 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Builders {
 
         public ItkDispatchResponse Build(Exception exception)
         {
+            return Build(exception, "An error has occured processing the request.");
+        }
+        public ItkDispatchResponse Build(Exception exception, string body)
+        {
             return new ItkDispatchResponse
             {
                 StatusCode =
                     exception.GetType() == typeof(DuplicateMessageException)
                         ? HttpStatusCode.Conflict
                         : HttpStatusCode.InternalServerError,
-                Body = "An error has occured processing the request.",
+                Body = body,
                 Content =
                     new StringContent(JsonConvert.SerializeObject(exception.Message), Encoding.UTF8, "application/json")
             };
@@ -53,5 +57,6 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Builders {
         ItkDispatchResponse Build(SubmitHaSCToServiceResponse submitHaScToServiceResponse);
         ItkDispatchResponse Build(SubmitHaSCToServiceResponse submitHaScToServiceResponse, string patientRef);
         ItkDispatchResponse Build(Exception exception);
+        ItkDispatchResponse Build(Exception exception, string body);
     }
 }
