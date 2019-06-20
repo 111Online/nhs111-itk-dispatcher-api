@@ -21,6 +21,13 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Builders {
             };
         }
 
+        public ItkDispatchResponse Build(SubmitHaSCToServiceResponse submitHaScToServiceResponse, string patientRef)
+        {
+            var response = Build(submitHaScToServiceResponse);
+            response.Content = new StringContent(patientRef);
+            return response;
+        }
+
         // Suggest mapping this an automapper mapping: submitEncounterToServiceResponseOverallStatus -> HttpStatusCode
         private HttpStatusCode DetermineSuccess(submitEncounterToServiceResponseOverallStatus responseStatus) {
             if (responseStatus == SUCCESS_RESPONSE) return HttpStatusCode.OK;
@@ -29,13 +36,17 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Builders {
 
         public ItkDispatchResponse Build(Exception exception)
         {
+            return Build(exception, "An error has occured processing the request.");
+        }
+        public ItkDispatchResponse Build(Exception exception, string body)
+        {
             return new ItkDispatchResponse
             {
                 StatusCode =
                     exception.GetType() == typeof(DuplicateMessageException)
                         ? HttpStatusCode.Conflict
                         : HttpStatusCode.InternalServerError,
-                Body = "An error has occured processing the request.",
+                Body = body,
                 Content =
                     new StringContent(JsonConvert.SerializeObject(exception.Message), Encoding.UTF8, "application/json")
             };
@@ -44,6 +55,8 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Builders {
 
     public interface IItkDispatchResponseBuilder {
         ItkDispatchResponse Build(SubmitHaSCToServiceResponse submitHaScToServiceResponse);
+        ItkDispatchResponse Build(SubmitHaSCToServiceResponse submitHaScToServiceResponse, string patientRef);
         ItkDispatchResponse Build(Exception exception);
+        ItkDispatchResponse Build(Exception exception, string body);
     }
 }
