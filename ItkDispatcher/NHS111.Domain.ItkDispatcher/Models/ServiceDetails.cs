@@ -6,5 +6,7 @@
         public string Name { get; set; }
         public string PostCode { get; set; }
         public string OdsCode { get; set; }
+        public string Ccg { get; set; }
+        public string Stp { get; set; }
     }
 }
