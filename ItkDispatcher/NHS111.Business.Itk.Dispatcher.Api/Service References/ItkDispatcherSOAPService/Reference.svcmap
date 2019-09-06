@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="a35aad93-4d8f-49ae-9b4a-03c842a561a5" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="b7d8181e-ccb5-4472-822f-3a2624c48924" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,7 +22,7 @@
     <MetadataSource Address="https://localhost:443/LIVE/MessageEngine/V1.5/?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="MessageEngineService.wsdl" MetadataType="Wsdl" ID="9d6d0153-90a7-4441-9685-69496524124d" SourceId="1" SourceUrl="https://localhost:443/LIVE/MessageEngine/V1.5/?wsdl" />
+    <MetadataFile FileName="MessageEngineService.wsdl" MetadataType="Wsdl" ID="13326e8b-627a-4167-a1ce-321096131200" SourceId="1" SourceUrl="https://localhost:443/LIVE/MessageEngine/V1.5/?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
