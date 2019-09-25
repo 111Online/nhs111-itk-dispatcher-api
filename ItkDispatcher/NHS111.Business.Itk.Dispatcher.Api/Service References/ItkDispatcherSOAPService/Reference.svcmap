@@ -22,7 +22,7 @@
     <MetadataSource Address="C:\Work\WSDL.xml" Protocol="file" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="MessageEngineService.wsdl" MetadataType="Wsdl" ID="cdb2cb11-f440-4f55-82f7-700211b8b58b" SourceId="1" SourceUrl="file:///C:/Work/WSDL.xml" />
+    <MetadataFile FileName="MessageEngineService.wsdl" MetadataType="Wsdl" ID="9d6d0153-90a7-4441-9685-69496524124d" SourceId="1" SourceUrl="https://localhost:443/LIVE/MessageEngine/V1.5/?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
