@@ -4,6 +4,7 @@ namespace NHS111.Domain.Itk.Dispatcher.Models
 {
     public class CaseDetails
     {
+        public string JourneyId { get; set; }
         public string ExternalReference { get; set; }
         public string StartingPathwayTitle { get; set; }
         public string StartingPathwayId { get; set; }
