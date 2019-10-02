@@ -83,6 +83,7 @@
       <xs:complexType name="stepInstance">
         <xs:sequence>
           <xs:element name="QuestionId" type="xs:string" />
+          <xs:element name="QuestionNo" type="xs:string" />
           <xs:element name="AnswerOrder" type="xs:int" />
         </xs:sequence>
       </xs:complexType>
@@ -596,42 +597,58 @@
   <wsdl:portType name="MessageEngine">
     <wsdl:documentation>NHS Choices Digital Assesment Services</wsdl:documentation>
     <wsdl:operation name="SubmitToCallQueueEnquiry">
-      <wsdl:documentation>This operation is used to submit a callback request into a call queue.</wsdl:documentation>
+      <wsdl:documentation>
+This operation is used to submit a callback request into a call queue.
+</wsdl:documentation>
       <wsdl:input name="SubmitToCallQueueEnquiry" message="tns:SubmitToCallQueueEnquiry" />
       <wsdl:output name="SubmitToCallQueueEnquiryResponse" message="tns:SubmitToCallQueueEnquiryResponse" />
     </wsdl:operation>
     <wsdl:operation name="IsOOH">
-      <wsdl:documentation>This operation allows a consumer to enquire if a datetime is regarded as being out of hours.</wsdl:documentation>
+      <wsdl:documentation>
+This operation allows a consumer to enquire if a datetime is regarded as being out of hours.
+</wsdl:documentation>
       <wsdl:input name="IsOOH" message="tns:IsOOH" />
       <wsdl:output name="IsOOHResponse" message="tns:IsOOHResponse" />
     </wsdl:operation>
     <wsdl:operation name="CacheOOHAvailable">
-      <wsdl:documentation>This operation provides an asyncronus call that instructs the ESB to retrieve out of hours service details for a given postcode in preperation for any future service calls. It is intended to be used as a non blocking call in the event the CheckOOHAvailable operation is to be called for a specifc postcode in the near future.</wsdl:documentation>
+      <wsdl:documentation>
+This operation provides an asyncronus call that instructs the ESB to retrieve out of hours service details for a given postcode in preperation for any future service calls. It is intended to be used as a non blocking call in the event the CheckOOHAvailable operation is to be called for a specifc postcode in the near future.
+</wsdl:documentation>
       <wsdl:input name="CacheOOHAvailable" message="tns:CacheOOHAvailable" />
       <wsdl:output name="CacheOOHAvailableResponse" message="tns:CacheOOHAvailableResponse" />
     </wsdl:operation>
     <wsdl:operation name="SubmitToCallQueueCallback">
-      <wsdl:documentation>This operation is used to submit an enquiry into a call queue.</wsdl:documentation>
+      <wsdl:documentation>
+This operation is used to submit an enquiry into a call queue.
+</wsdl:documentation>
       <wsdl:input name="SubmitToCallQueueCallback" message="tns:SubmitToCallQueueCallback" />
       <wsdl:output name="SubmitToCallQueueCallbackResponse" message="tns:SubmitToCallQueueCallbackResponse" />
     </wsdl:operation>
     <wsdl:operation name="SubmitHaSCToService">
-      <wsdl:documentation>This operation is used to submit a completed HaSC to an endpoint.</wsdl:documentation>
+      <wsdl:documentation>
+This operation is used to submit a completed HaSC to an endpoint.
+</wsdl:documentation>
       <wsdl:input name="SubmitHaSCToService" message="tns:SubmitHaSCToService" />
       <wsdl:output name="SubmitHaSCToServiceResponse" message="tns:SubmitHaSCToServiceResponse" />
     </wsdl:operation>
     <wsdl:operation name="VerifyPatient">
-      <wsdl:documentation>This operation is used to identify a patient and discover their Repeat Caller status.</wsdl:documentation>
+      <wsdl:documentation>
+This operation is used to identify a patient and discover their Repeat Caller status.
+</wsdl:documentation>
       <wsdl:input name="VerifyPatient" message="tns:VerifyPatient" />
       <wsdl:output name="VerifyPatientResponse" message="tns:VerifyPatientResponse" />
     </wsdl:operation>
     <wsdl:operation name="CheckOOHAvailable">
-      <wsdl:documentation>This operation returns the service details for an out of hours if available. If the request is made within hours no services are returned.</wsdl:documentation>
+      <wsdl:documentation>
+This operation returns the service details for an out of hours if available. If the request is made within hours no services are returned.
+</wsdl:documentation>
       <wsdl:input name="CheckOOHAvailable" message="tns:CheckOOHAvailable" />
       <wsdl:output name="CheckOOHAvailableResponse" message="tns:CheckOOHAvailableResponse" />
     </wsdl:operation>
     <wsdl:operation name="LocateServices">
-      <wsdl:documentation>This operation is used to discover medical services for a given disposition within a specific area.</wsdl:documentation>
+      <wsdl:documentation>
+This operation is used to discover medical services for a given disposition within a specific area.
+</wsdl:documentation>
       <wsdl:input name="LocateServices" message="tns:LocateServices" />
       <wsdl:output name="LocateServicesResponse" message="tns:LocateServicesResponse" />
     </wsdl:operation>

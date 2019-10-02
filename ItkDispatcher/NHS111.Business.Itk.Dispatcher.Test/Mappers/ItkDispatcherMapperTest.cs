@@ -175,8 +175,8 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Mappers
             var requestWithReportItems = _basicRequest;
             requestWithReportItems.CaseDetails.CaseSteps = new List<StepItem>
             {
-                new StepItem { QuestionId = "q1", AnswerOrder = 0 },
-                new StepItem { QuestionId = "q2", AnswerOrder = 2 },
+                new StepItem { QuestionId = "q1", QuestionNo = "TX1", AnswerOrder = 0 },
+                new StepItem { QuestionId = "q2", QuestionNo = "TX2", AnswerOrder = 2 },
             };
 
             var result = _mapper.Map<ItkDispatchRequest, SubmitHaSCToService>(requestWithReportItems);
@@ -188,6 +188,7 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Mappers
             Assert.AreEqual(2, result.SubmitEncounterToServiceRequest.CaseDetails.CaseSteps.Count());
 
             Assert.AreEqual("q1", result.SubmitEncounterToServiceRequest.CaseDetails.CaseSteps.First().QuestionId);
+            Assert.AreEqual("TX1", result.SubmitEncounterToServiceRequest.CaseDetails.CaseSteps.First().QuestionNo);
             Assert.AreEqual("q2", result.SubmitEncounterToServiceRequest.CaseDetails.CaseSteps.Skip(1).First().QuestionId);
         }
 
