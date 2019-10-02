@@ -19,7 +19,7 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="https://localhost:443/LIVE/MessageEngine/V1.5/?wsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address="C:\Work\WSDL.xml" Protocol="file" SourceId="1" />
   </MetadataSources>
   <Metadata>
     <MetadataFile FileName="MessageEngineService.wsdl" MetadataType="Wsdl" ID="13326e8b-627a-4167-a1ce-321096131200" SourceId="1" SourceUrl="https://localhost:443/LIVE/MessageEngine/V1.5/?wsdl" />

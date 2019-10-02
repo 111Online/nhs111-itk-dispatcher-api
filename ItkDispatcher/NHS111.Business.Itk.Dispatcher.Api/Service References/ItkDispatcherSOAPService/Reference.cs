@@ -2168,6 +2168,8 @@ namespace NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService {
         
         private string questionIdField;
         
+        private string questionNoField;
+        
         private int answerOrderField;
         
         /// <remarks/>
@@ -2184,6 +2186,18 @@ namespace NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        public string QuestionNo {
+            get {
+                return this.questionNoField;
+            }
+            set {
+                this.questionNoField = value;
+                this.RaisePropertyChanged("QuestionNo");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
         public int AnswerOrder {
             get {
                 return this.answerOrderField;
