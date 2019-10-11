@@ -929,6 +929,10 @@ namespace NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService {
         
         private string postcodeField;
         
+        private string stpField;
+        
+        private string ccgField;
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
         public int id {
@@ -998,6 +1002,30 @@ namespace NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService {
             set {
                 this.postcodeField = value;
                 this.RaisePropertyChanged("postcode");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=6)]
+        public string stp {
+            get {
+                return this.stpField;
+            }
+            set {
+                this.stpField = value;
+                this.RaisePropertyChanged("stp");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=7)]
+        public string ccg {
+            get {
+                return this.ccgField;
+            }
+            set {
+                this.ccgField = value;
+                this.RaisePropertyChanged("ccg");
             }
         }
         

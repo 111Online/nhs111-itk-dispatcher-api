@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:tns="services.nhsd.messages" name="MessageEngineService" targetNamespace="services.nhsd.messages" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="services.nhsd.messages" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="MessageEngineService" targetNamespace="services.nhsd.messages" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <xs:schema elementFormDefault="unqualified" targetNamespace="services.nhsd.messages" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
       <xs:element name="CacheOOHAvailable" type="tns:CacheOOHAvailable" />
@@ -42,7 +42,7 @@
       <xs:complexType name="SubmitToCallQueueDetails">
         <xs:sequence>
           <xs:element minOccurs="0" name="ExternalReference" type="xs:string" />
-          <xs:element minOccurs="0" name="JourneyId" type="xs:string" />
+          <xs:element name="JourneyId" type="xs:string" />
           <xs:element minOccurs="0" name="Source" type="xs:string" />
           <xs:element minOccurs="0" name="conditionTitle" type="xs:string" />
           <xs:element minOccurs="0" name="conditionId" type="xs:string" />
@@ -254,6 +254,8 @@
           <xs:element minOccurs="0" name="contactDetails" type="xs:string" />
           <xs:element minOccurs="0" name="address" type="xs:string" />
           <xs:element minOccurs="0" name="postcode" type="xs:string" />
+          <xs:element minOccurs="0" name="stp" type="xs:string" />
+          <xs:element minOccurs="0" name="ccg" type="xs:string" />
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="SubmitHaSCToServiceResponse">
@@ -729,7 +731,7 @@ This operation is used to discover medical services for a given disposition with
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="MessageEngineService">
-    <wsdl:documentation>MessageEngine WSDL Specification 2.1.0</wsdl:documentation>
+    <wsdl:documentation>MessageEngine WSDL Specification 2.4.0</wsdl:documentation>
     <wsdl:port name="MessageEnginePort" binding="tns:MessageEngineServiceSoapBinding">
       <soap:address location="https://localhost/LIVE/MessageEngine/V1.5/" />
     </wsdl:port>
