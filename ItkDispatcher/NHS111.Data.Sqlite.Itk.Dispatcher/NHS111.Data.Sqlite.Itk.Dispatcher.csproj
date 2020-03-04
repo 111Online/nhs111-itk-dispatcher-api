@@ -56,15 +56,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\NHS111.Data.Itk.Dispatcher\NHS111.Data.Itk.Dispatcher.csproj">
-      <Project>{2E62B76D-CB97-4963-9724-D0C2CF9B6582}</Project>
+      <Project>{505e88c0-b726-49f8-88e8-40eb5d6bf6bf}</Project>
       <Name>NHS111.Data.Itk.Dispatcher</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.112.0\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.112.0\build\net451\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -330,7 +330,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NHS111.Data.Itk.Dispatcher\NHS111.Data.Itk.Dispatcher.csproj">
-      <Project>{2E62B76D-CB97-4963-9724-D0C2CF9B6582}</Project>
+      <Project>{505e88c0-b726-49f8-88e8-40eb5d6bf6bf}</Project>
       <Name>NHS111.Data.Itk.Dispatcher</Name>
     </ProjectReference>
     <ProjectReference Include="..\NHS111.Data.Sqlite.Itk.Dispatcher\NHS111.Data.Sqlite.Itk.Dispatcher.csproj">
