@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>NHS111.Business.Itk.Dispatcher.Api</id>
+    <version>1.7.0.1449</version>
+    <authors>SYSTEM</authors>
+    <owners>SYSTEM</owners>
+    <licenseUrl>http://example.com</licenseUrl>
+    <projectUrl>http://example.com</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>The NHS111.Business.Itk.Dispatcher.Api.csproj deployment package, built on 3/4/2020</description>
+    <releaseNotes />
+  </metadata>
+  <files>
+    <file src="bin\Release\x86\*.*" target="bin\x86" />
+    <file src="bin\Release\x64\*.*" target="bin\x64" />
+  </files>
+</package>
