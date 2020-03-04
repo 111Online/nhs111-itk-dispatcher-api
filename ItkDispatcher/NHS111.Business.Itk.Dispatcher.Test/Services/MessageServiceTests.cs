@@ -10,15 +10,19 @@ using NUnit.Framework;
 
 namespace NHS111.Business.Itk.Dispatcher.Test.Services
 {
+    using Data.Itk.Dispatcher.Repositories;
+
     [TestFixture]
     public class MessageServiceTests
     {
         private Mock<IAzureStorageService> _moqAzureStorageService;
+        private Mock<IItkDispatchRequestRepository> _mockRequestRepository;
 
         [SetUp]
         public void SetUp()
         {
             _moqAzureStorageService = new Mock<IAzureStorageService>();
+            _mockRequestRepository = new Mock<IItkDispatchRequestRepository>();
         }
 
         [Test]
@@ -27,7 +31,7 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Services
             Journey journey = null;
             _moqAzureStorageService.Setup(s => s.GetHash(It.IsAny<string>())).Returns(journey);
 
-            var srv = new MessageService(_moqAzureStorageService.Object);
+            var srv = new MessageService(_moqAzureStorageService.Object, _mockRequestRepository.Object);
 
             var result = srv.MessageAlreadyExists(string.Empty, string.Empty);
             Assert.IsFalse(result);
@@ -39,7 +43,7 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Services
             var journey = new Journey() { Id = "123456789", Hash = "82DFA5549EBC9AFC168EB7931EBECE" };
             _moqAzureStorageService.Setup(s => s.GetHash(It.IsAny<string>())).Returns(journey);
 
-            var srv = new MessageService(_moqAzureStorageService.Object);
+            var srv = new MessageService(_moqAzureStorageService.Object, _mockRequestRepository.Object);
 
             var result = srv.MessageAlreadyExists("123456789", "Test message");
             Assert.IsTrue(result);
@@ -51,7 +55,7 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Services
             var journey = new Journey() { Id = "123456789", Hash = "82DFA5549EBC9AFC168EB7931EBECE" };
             _moqAzureStorageService.Setup(s => s.GetHash(It.IsAny<string>())).Returns(journey);
 
-            var srv = new MessageService(_moqAzureStorageService.Object);
+            var srv = new MessageService(_moqAzureStorageService.Object, _mockRequestRepository.Object);
 
             var result = srv.MessageAlreadyExists("123456789", "Test message two");
             Assert.IsFalse(result);
