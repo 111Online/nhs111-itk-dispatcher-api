@@ -13,7 +13,7 @@ namespace NHS111.Business.Itk.Dispatcher.API.Functional.Tests
     public class ItkDispatcherTests
     {
         private string _domainITKApi =
-            "https://nhs111-beta-itkdispatcher.azurewebsites.net/";
+            "http://localhost:62666/";
 
         
         private readonly RestfulHelper _restfulHelper = new RestfulHelper();

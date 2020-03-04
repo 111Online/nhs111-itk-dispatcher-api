@@ -132,6 +132,10 @@
       <Project>{396b6fa5-9842-455b-8856-887ba33adbca}</Project>
       <Name>NHS111.Business.Itk.Dispatcher.Api</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NHS111.Data.Itk.Dispatcher\NHS111.Data.Itk.Dispatcher.csproj">
+      <Project>{2E62B76D-CB97-4963-9724-D0C2CF9B6582}</Project>
+      <Name>NHS111.Data.Itk.Dispatcher</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NHS111.Domain.ItkDispatcher\NHS111.Domain.Itk.Dispatcher.csproj">
       <Project>{5a827201-6af1-419b-bace-65c851ffa90c}</Project>
       <Name>NHS111.Domain.Itk.Dispatcher</Name>

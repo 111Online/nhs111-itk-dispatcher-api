@@ -8,5 +8,10 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Configuration
         {
             get { return ConfigurationManager.AppSettings["EsbEndpointUrl"];}
         }
+        public string ConnectionString
+        {
+            get { return ConfigurationManager.ConnectionStrings["RequestStore"].ConnectionString; }
+        }
+
     }
 }

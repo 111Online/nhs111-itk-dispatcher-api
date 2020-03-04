@@ -8,7 +8,7 @@ namespace NHS111.Domain.Itk.Dispatcher.IoC
     {
         public DispatcherDomainRegistry()
         {
-            For<IAzureStorageService>().Use<AzureStorageService>().Singleton();
+            For<IAzureStorageService>().Use<NullAzureStorageService>().Singleton();
             Scan(scan =>
             {
                 scan.TheCallingAssembly();
