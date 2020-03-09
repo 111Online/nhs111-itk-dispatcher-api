@@ -2,7 +2,6 @@
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using NHS111.Utils.Helpers;
 using NUnit.Framework;
 
 namespace NHS111.Business.Itk.Dispatcher.API.Functional.Tests

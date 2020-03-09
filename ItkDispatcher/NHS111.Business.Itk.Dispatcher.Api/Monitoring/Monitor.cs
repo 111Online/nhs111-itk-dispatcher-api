@@ -1,7 +1,5 @@
-﻿
-using System.Reflection;
+﻿using System.Reflection;
 using System.Threading.Tasks;
-using NHS111.Utils.Monitoring;
 
 namespace NHS111.Business.Itk.Dispatcher.Api.Monitoring {
     public class Monitor : BaseMonitor {

@@ -4,8 +4,6 @@ namespace NHS111.Domain.Itk.Dispatcher.Services
 {
     using System;
 
-    using NHS111.Utils.Cryptography;
-
     public class MessageService : IMessageService
     {
         private readonly IAzureStorageService _azureStorageService;
@@ -24,7 +22,7 @@ namespace NHS111.Domain.Itk.Dispatcher.Services
                 return false;
             }
 
-            var hashEngine = new ComputeHash();
+            var hashEngine = new HashService();
 
             var messageHash = hashEngine.Compute(message);
 
@@ -35,7 +33,7 @@ namespace NHS111.Domain.Itk.Dispatcher.Services
         {
             try
             {
-                var hashEngine = new ComputeHash();
+                var hashEngine = new HashService();
 
                 var messageHash = hashEngine.Compute(message);
 

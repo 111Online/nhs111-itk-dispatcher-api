@@ -17,7 +17,7 @@ using NHS111.Domain.Itk.Dispatcher.Services;
 
 namespace NHS111.Business.Itk.Dispatcher.Api.Controllers
 {
-    using NHS111.Utils.Attributes;
+    using NHS111.Business.Itk.Dispatcher.Api.Attributes;
 
     [LogHandleErrorForApi]
     public class ItkDispatcherController : ApiController

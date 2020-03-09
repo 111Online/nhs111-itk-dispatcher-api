@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 using Microsoft.Azure;
 using Microsoft.WindowsAzure.Storage;
