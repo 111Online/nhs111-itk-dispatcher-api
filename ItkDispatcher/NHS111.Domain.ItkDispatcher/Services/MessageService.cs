@@ -41,6 +41,7 @@ namespace NHS111.Domain.Itk.Dispatcher.Services
                     new Journey
                      {
                          RowKey = id, 
+                         Id = id,
                          Hash = messageHash
                      });
             }

@@ -11,7 +11,10 @@ namespace NHS111.Domain.Itk.Dispatcher.Models
         {
             PartitionKey = string.Format("{0:yyyy-MM}", DateTime.UtcNow);
         }
-        
+
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
+
         [JsonProperty(PropertyName = "hash")]
         public string Hash { get; set; }
     }
