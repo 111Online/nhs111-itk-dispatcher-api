@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using Microsoft.Azure;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
@@ -16,39 +14,55 @@ namespace NHS111.Domain.Itk.Dispatcher.Services
 
         public AzureStorageService()
         {
-            // Retrieve the storage account from the connection string.
+            
             var storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
-            // Create the table client.
+            
             var tableClient = storageAccount.CreateCloudTableClient();
-            // Retrieve a reference to the table.
+            
             _table = tableClient.GetTableReference(CloudConfigurationManager.GetSetting("StorageTableReference"));
-            // Create the table if it doesn't exist.
+            
             _table.CreateIfNotExists();
         }
 
         public int AddHash(Journey journey)
         {
-            var existingJourney = GetHash(journey.Id);
+            var existingJourney = GetHash(journey.RowKey);
+
             if (existingJourney != null)
+            {
                 existingJourney.Hash = journey.Hash;
+
+            }
             else
+            {
                 existingJourney = journey;
+            }
 
             var insertOperation = TableOperation.InsertOrReplace(existingJourney);
+
             var tableResult = _table.ExecuteAsync(insertOperation);
+
             return tableResult.Id;
         }
 
-        public Journey GetHash(string journeyId)
+        public Journey GetHash(string rowKey)
         {
-            var retrievedResult = _table.CreateQuery<Journey>().Where(j => j.Id == journeyId);
-            return retrievedResult.FirstOrDefault();
-        }
-    }
+            try
+            {
+                var partitionKey = DateTime.Now.ToString("yyyy-MM");
+                
+                var operation = TableOperation.Retrieve<Journey>(partitionKey, rowKey);
 
-    public interface IAzureStorageService
-    {
-        int AddHash(Journey journey);
-        Journey GetHash(string journeyId);
+                var result = _table.Execute(operation);
+
+                var journey = result.Result as Journey;
+
+                return journey;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
     }
 }

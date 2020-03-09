@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using KafkaNet.Protocol;
+
 using Newtonsoft.Json;
 using NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService;
 using NHS111.Domain.Itk.Dispatcher.Models;

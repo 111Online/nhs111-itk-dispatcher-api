@@ -2,6 +2,8 @@
 
 namespace NHS111.Domain.Itk.Dispatcher.Services
 {
+    using System;
+
     using NHS111.Utils.Cryptography;
 
     public class MessageService : IMessageService
@@ -16,24 +18,38 @@ namespace NHS111.Domain.Itk.Dispatcher.Services
         public bool MessageAlreadyExists(string messageId, string message)
         {
             var journey = _azureStorageService.GetHash(messageId);
-            if (journey == null) return false;
+
+            if (journey == null)
+            {
+                return false;
+            }
 
             var hashEngine = new ComputeHash();
+
             var messageHash = hashEngine.Compute(message);
+
             return hashEngine.Compare(journey.Hash, messageHash);
         }
 
         public void StoreMessage(string id, string message)
         {
-            var hashEngine = new ComputeHash();
-            var messageHash = hashEngine.Compute(message);
-            _azureStorageService.AddHash(new Journey() { Id = id, Hash = messageHash });
-        }
-    }
+            try
+            {
+                var hashEngine = new ComputeHash();
 
-    public interface IMessageService
-    {
-        bool MessageAlreadyExists(string messageId, string message);
-        void StoreMessage(string id, string message);
+                var messageHash = hashEngine.Compute(message);
+
+                _azureStorageService.AddHash(
+                    new Journey
+                     {
+                         RowKey = id, 
+                         Hash = messageHash
+                     });
+            }
+            catch (Exception)
+            {
+                // TODO: Add logging to identify why the insert failed
+            }
+        }
     }
 }
