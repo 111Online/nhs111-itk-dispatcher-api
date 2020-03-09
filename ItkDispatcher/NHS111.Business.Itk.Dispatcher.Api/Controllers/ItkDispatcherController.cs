@@ -1,15 +1,12 @@
 ﻿using System;
 using System.IO;
-using System.Net;
-using System.Net.Security;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Xml;
 using System.Xml.Serialization;
-using AutoMapper;
+
 using log4net;
-using log4net.Core;
+
 using Newtonsoft.Json;
 using NHS111.Business.Itk.Dispatcher.Api.Builders;
 using NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService;
@@ -17,10 +14,12 @@ using NHS111.Business.Itk.Dispatcher.Api.Mappings;
 using NHS111.Domain.Itk.Dispatcher.Exceptions;
 using NHS111.Domain.Itk.Dispatcher.Models;
 using NHS111.Domain.Itk.Dispatcher.Services;
-using NHS111.Utils.Attributes;
+
 
 namespace NHS111.Business.Itk.Dispatcher.Api.Controllers
 {
+    using NHS111.Utils.Attributes;
+
     [LogHandleErrorForApi]
     public class ItkDispatcherController : ApiController
     {

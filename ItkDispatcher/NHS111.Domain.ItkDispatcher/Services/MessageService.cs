@@ -1,9 +1,9 @@
-﻿using System.Threading.Tasks;
-using NHS111.Domain.Itk.Dispatcher.Models;
-using NHS111.Utils.Cryptography;
+﻿using NHS111.Domain.Itk.Dispatcher.Models;
 
 namespace NHS111.Domain.Itk.Dispatcher.Services
 {
+    using NHS111.Utils.Cryptography;
+
     public class MessageService : IMessageService
     {
         private readonly IAzureStorageService _azureStorageService;
@@ -27,7 +27,7 @@ namespace NHS111.Domain.Itk.Dispatcher.Services
         {
             var hashEngine = new ComputeHash();
             var messageHash = hashEngine.Compute(message);
-            _azureStorageService.AddHash(new Journey() {Id = id, Hash = messageHash});
+            _azureStorageService.AddHash(new Journey() { Id = id, Hash = messageHash });
         }
     }
 

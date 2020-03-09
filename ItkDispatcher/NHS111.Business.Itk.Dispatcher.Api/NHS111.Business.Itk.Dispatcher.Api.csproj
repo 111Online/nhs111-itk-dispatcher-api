@@ -120,9 +120,8 @@
       <HintPath>..\packages\NHS111.IoC.1.0.0.30\lib\net451\NHS111.IoC.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NHS111.Utils, Version=1.0.0.36, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NHS111.Utils.1.0.0.36\lib\net451\NHS111.Utils.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="NHS111.Utils">
+      <HintPath>..\packages\NHS111.Utils.1.0.0.78\lib\net451\NHS111.Utils.dll</HintPath>
     </Reference>
     <Reference Include="StackExchange.Redis, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\StackExchange.Redis.1.1.603\lib\net45\StackExchange.Redis.dll</HintPath>
