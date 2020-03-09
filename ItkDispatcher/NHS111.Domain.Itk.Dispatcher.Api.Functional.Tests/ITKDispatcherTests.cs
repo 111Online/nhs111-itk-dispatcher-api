@@ -11,7 +11,7 @@ namespace NHS111.Business.Itk.Dispatcher.API.Functional.Tests
     [TestFixture]
     public class ItkDispatcherTests
     {
-        private string _domainITKApi = "https://nhs111-itkdispatcher.azurewebsites.net/";
+        private string _domainITKApi = "https://nhs111-beta-itkdispatcher.azurewebsites.net/";
         
         private readonly RestfulHelper _restfulHelper = new RestfulHelper();
 
@@ -65,8 +65,7 @@ namespace NHS111.Business.Itk.Dispatcher.API.Functional.Tests
             Assert.AreEqual(result.Result.StatusCode, HttpStatusCode.InternalServerError);
 
         }
-
-
+        
         public static HttpRequestMessage CreateHTTPRequest(string requestContent)
         {
             return new HttpRequestMessage
