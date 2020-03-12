@@ -1,10 +1,11 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Http;
-using NHS111.Utils.Attributes;
-using NHS111.Utils.Monitoring;
 
 namespace NHS111.Business.Itk.Dispatcher.Api.Controllers
 {
+    using NHS111.Business.Itk.Dispatcher.Api.Attributes;
+    using NHS111.Business.Itk.Dispatcher.Api.Monitoring;
+
     [LogHandleErrorForApi]
     public class MonitoringController : ApiController
     {

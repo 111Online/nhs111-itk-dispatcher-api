@@ -1,5 +1,5 @@
 ﻿using System.ServiceModel;
-using AutoMapper;
+
 using log4net;
 using log4net.Config;
 using NHS111.Business.Itk.Dispatcher.Api.ItkDispatcherSOAPService;
@@ -7,7 +7,6 @@ using StructureMap;
 using StructureMap.Graph;
 using AutoMapperWebConfiguration = NHS111.Business.Itk.Dispatcher.Api.Mappings.AutoMapperWebConfiguration;
 using NHS111.Domain.Itk.Dispatcher.IoC;
-using NHS111.Utils.Logging;
 
 namespace NHS111.Business.Itk.Dispatcher.Api.IoC
 {
