@@ -78,6 +78,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
         {
             var submitPatientservice = destination ?? new SubmitPatientService();
 
+            submitPatientservice.EmailAddress = source.EmailAddress;
             submitPatientservice.TelephoneNumber = source.TelephoneNumber;
             submitPatientservice.Forename = source.Forename;
             submitPatientservice.Surname = source.Surname;
