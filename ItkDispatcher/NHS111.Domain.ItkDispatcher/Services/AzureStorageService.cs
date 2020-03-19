@@ -3,7 +3,6 @@
 using Microsoft.Azure;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
-using NHS111.Domain.Itk.Dispatcher.Models;
 
 namespace NHS111.Domain.Itk.Dispatcher.Services
 {
@@ -23,44 +22,30 @@ namespace NHS111.Domain.Itk.Dispatcher.Services
             _table.CreateIfNotExists();
         }
 
-        public int AddHash(Journey journey)
+        public void AddEntity(TableEntity entity)
         {
-            var existingJourney = GetHash(journey.RowKey);
-
-            if (existingJourney != null)
+            if (!EntityExists(entity))
             {
-                existingJourney.Hash = journey.Hash;
+                var insertOperation = TableOperation.InsertOrReplace(entity);
 
+                _table.ExecuteAsync(insertOperation);
             }
-            else
-            {
-                existingJourney = journey;
-            }
-
-            var insertOperation = TableOperation.InsertOrReplace(existingJourney);
-
-            var tableResult = _table.ExecuteAsync(insertOperation);
-
-            return tableResult.Id;
         }
 
-        public Journey GetHash(string rowKey)
+        public bool EntityExists(TableEntity entity)
         {
             try
             {
-                var partitionKey = DateTime.Now.ToString("yyyy-MM");
+                var operation = TableOperation.Retrieve<TableEntity>(entity.PartitionKey, entity.RowKey);
                 
-                var operation = TableOperation.Retrieve<Journey>(partitionKey, rowKey);
-
                 var result = _table.Execute(operation);
 
-                var journey = result.Result as Journey;
-
-                return journey;
+                return result.Result != null;
             }
             catch (Exception)
             {
-                return null;
+                // TODO: this should be logged and an appropriate response returned to the client
+                return false;
             }
         }
     }

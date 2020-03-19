@@ -2,8 +2,8 @@
 {
     public interface IMessageService
     {
-        bool MessageAlreadyExists(string messageId, string message);
+        bool MessageAlreadyExists(string message);
 
-        void StoreMessage(string id, string message);
+        void StoreMessage(string message);
     }
 }

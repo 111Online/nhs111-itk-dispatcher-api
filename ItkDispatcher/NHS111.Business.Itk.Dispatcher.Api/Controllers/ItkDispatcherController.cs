@@ -1,9 +1,6 @@
 ﻿using System;
-using System.IO;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Xml;
-using System.Xml.Serialization;
 
 using log4net;
 
@@ -45,7 +42,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Controllers
 
             request.CaseDetails.ExternalReference = _patientReferenceService.BuildReference(request.CaseDetails);
             
-            var messageExists = _messageService.MessageAlreadyExists(request.CaseDetails.JourneyId, JsonConvert.SerializeObject(request));
+            var messageExists = _messageService.MessageAlreadyExists(JsonConvert.SerializeObject(request));
             
             if (messageExists)
             {
@@ -56,17 +53,6 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Controllers
 
             var submitHaSCToService = AutoMapperWebConfiguration.Mapper.Map<ItkDispatchRequest, SubmitHaSCToService>(request);
            
-#if DEBUG
-            var xsSubmit = new XmlSerializer(typeof(SubmitHaSCToService));
-            using (var sww = new StringWriter())
-            {
-                using (var writer = XmlWriter.Create(sww))
-                {
-                    xsSubmit.Serialize(writer, submitHaSCToService);
-                    var xml = sww.ToString();
-                }
-            }
-#endif
             SubmitHaSCToServiceResponse itkResponse;
 
             try {
@@ -83,7 +69,7 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Controllers
 
             if (response.IsSuccessStatusCode)
             {
-                _messageService.StoreMessage(request.CaseDetails.JourneyId, JsonConvert.SerializeObject(request));
+                _messageService.StoreMessage(JsonConvert.SerializeObject(request));
             }
 
             return response;

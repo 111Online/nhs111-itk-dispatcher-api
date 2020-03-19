@@ -1,10 +1,12 @@
 ﻿using Moq;
-using NHS111.Domain.Itk.Dispatcher.Models;
+
 using NHS111.Domain.Itk.Dispatcher.Services;
 using NUnit.Framework;
 
 namespace NHS111.Business.Itk.Dispatcher.Test.Services
 {
+    using Microsoft.WindowsAzure.Storage.Table;
+
     [TestFixture]
     public class MessageServiceTests
     {
@@ -19,13 +21,11 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Services
         [Test]
         public void No_existing_message_returns_false()
         {
-            Journey journey = null;
-
-            _moqAzureStorageService.Setup(s => s.GetHash(It.IsAny<string>())).Returns(journey);
+            _moqAzureStorageService.Setup(s => s.EntityExists(It.IsAny<TableEntity>())).Returns(false);
 
             var srv = new MessageService(_moqAzureStorageService.Object);
 
-            var result = srv.MessageAlreadyExists(string.Empty, string.Empty);
+            var result = srv.MessageAlreadyExists(string.Empty);
 
             Assert.IsFalse(result);
         }
@@ -33,13 +33,11 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Services
         [Test]
         public void Existing_message_matches_returns_true()
         {
-            var journey = new Journey { RowKey = "123456789", Hash = "82DFA5549EBC9AFC168EB7931EBECE" };
-
-            _moqAzureStorageService.Setup(s => s.GetHash(It.IsAny<string>())).Returns(journey);
+            _moqAzureStorageService.Setup(s => s.EntityExists(It.IsAny<TableEntity>())).Returns(true);
 
             var srv = new MessageService(_moqAzureStorageService.Object);
 
-            var result = srv.MessageAlreadyExists("123456789", "Test message");
+            var result = srv.MessageAlreadyExists("Test message");
 
             Assert.IsTrue(result);
         }
@@ -47,13 +45,11 @@ namespace NHS111.Business.Itk.Dispatcher.Test.Services
         [Test]
         public void Existing_message_doesnt_match_return_false()
         {
-            var journey = new Journey { RowKey = "123456789", Hash = "82DFA5549EBC9AFC168EB7931EBECE" };
-
-            _moqAzureStorageService.Setup(s => s.GetHash(It.IsAny<string>())).Returns(journey);
+            _moqAzureStorageService.Setup(s => s.EntityExists(It.IsAny<TableEntity>())).Returns(false);
 
             var srv = new MessageService(_moqAzureStorageService.Object);
 
-            var result = srv.MessageAlreadyExists("123456789", "Test message two");
+            var result = srv.MessageAlreadyExists("Test message two");
 
             Assert.IsFalse(result);
         }
