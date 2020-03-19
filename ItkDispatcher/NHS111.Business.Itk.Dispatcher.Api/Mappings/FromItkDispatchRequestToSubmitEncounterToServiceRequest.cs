@@ -76,32 +76,33 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Mappings
     {
         public SubmitPatientService Convert(PatientDetails source, SubmitPatientService destination, ResolutionContext context)
         {
-            var submitPatientservice = destination ?? new SubmitPatientService();
+            var submitPatientService = destination ?? new SubmitPatientService();
 
-            submitPatientservice.TelephoneNumber = source.TelephoneNumber;
-            submitPatientservice.Forename = source.Forename;
-            submitPatientservice.Surname = source.Surname;
+            submitPatientService.EmailAddress = source.EmailAddress;
+            submitPatientService.TelephoneNumber = source.TelephoneNumber;
+            submitPatientService.Forename = source.Forename;
+            submitPatientService.Surname = source.Surname;
 
             gender gender = Enum.TryParse(source.Gender, out gender) ? gender : gender.Not_Known;
-            submitPatientservice.Gender = gender;
-            submitPatientservice.AgeGroup = source.AgeGroup;
+            submitPatientService.Gender = gender;
+            submitPatientService.AgeGroup = source.AgeGroup;
 
-            submitPatientservice.DateOfBirth = new DateOfBirth() {Item = source.DateOfBirth.ToString("yyyy-MM-dd")};
+            submitPatientService.DateOfBirth = new DateOfBirth {Item = source.DateOfBirth.ToString("yyyy-MM-dd")};
 
-            submitPatientservice.CurrentAddress = context.Mapper.Map<ItkDispatcherSOAPService.Address>(source.CurrentAddress);
-            submitPatientservice.HomeAddress = context.Mapper.Map<ItkDispatcherSOAPService.Address>(source.HomeAddress);
-            submitPatientservice.GpPractice = context.Mapper.Map<GPPractice>(source.GpPractice);
+            submitPatientService.CurrentAddress = context.Mapper.Map<ItkDispatcherSOAPService.Address>(source.CurrentAddress);
+            submitPatientService.HomeAddress = context.Mapper.Map<ItkDispatcherSOAPService.Address>(source.HomeAddress);
+            submitPatientService.GpPractice = context.Mapper.Map<GPPractice>(source.GpPractice);
 
-            submitPatientservice.InformantType = informantType.Self;
-            if (source.Informant == null) return submitPatientservice;
+            submitPatientService.InformantType = informantType.Self;
+            if (source.Informant == null) return submitPatientService;
 
             informantType informant = Enum.TryParse(source.Informant.Type.ToString(), out informant) ? informant : informantType.NotSpecified;
-            submitPatientservice.InformantType = informant;
+            submitPatientService.InformantType = informant;
 
             if (!string.IsNullOrEmpty(source.Informant.Forename) || !string.IsNullOrEmpty(source.Informant.Surname))
-                submitPatientservice.InformantName = string.Format("{0} {1}", source.Informant.Forename, source.Informant.Surname);
+                submitPatientService.InformantName = string.Format("{0} {1}", source.Informant.Forename, source.Informant.Surname);
 
-            return submitPatientservice;
+            return submitPatientService;
         }
     }
 }

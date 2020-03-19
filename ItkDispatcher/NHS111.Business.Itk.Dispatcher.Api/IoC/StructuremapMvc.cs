@@ -18,11 +18,10 @@
 using System.Web.Mvc;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using NHS111.Business.Itk.Dispatcher.Api.IoC;
-using NHS111.IoC.DependencyResolution;
 using StructureMap;
 using WebActivatorEx;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(StructuremapMvc), "Start")]
+[assembly: PreApplicationStartMethod(typeof(StructuremapMvc), "Start")]
 [assembly: ApplicationShutdownMethod(typeof(StructuremapMvc), "End")]
 
 namespace NHS111.Business.Itk.Dispatcher.Api.IoC
@@ -36,12 +35,14 @@ namespace NHS111.Business.Itk.Dispatcher.Api.IoC
 		
 		#region Public Methods and Operators
 		
-		public static void End() {
+		public static void End()
+        {
             StructureMapDependencyScope.Dispose();
         }
 		
-        public static void Start() {
-            IContainer container = Itk.Dispatcher.Api.IoC.IoC.Initialize();
+        public static void Start()
+        {
+            var container = IoC.Initialize();
             StructureMapDependencyScope = new StructureMapDependencyScope(container);
             DependencyResolver.SetResolver(StructureMapDependencyScope);
             DynamicModuleUtility.RegisterModule(typeof(StructureMapScopeModule));

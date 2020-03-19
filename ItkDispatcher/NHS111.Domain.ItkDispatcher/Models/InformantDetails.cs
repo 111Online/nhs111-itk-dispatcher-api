@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NHS111.Domain.Itk.Dispatcher.Models
+﻿namespace NHS111.Domain.Itk.Dispatcher.Models
 {
     public enum InformantType
     {
@@ -15,8 +9,11 @@ namespace NHS111.Domain.Itk.Dispatcher.Models
     public class InformantDetails
     {
         public string Forename { get; set; }
+
         public string Surname { get; set; }
+
         public string TelephoneNumber { get; set; }
+
         public InformantType Type { get; set; }
     }
 }

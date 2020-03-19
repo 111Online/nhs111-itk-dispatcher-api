@@ -1,11 +1,11 @@
 ﻿namespace NHS111.Domain.Itk.Dispatcher.Services
 {
-    using NHS111.Domain.Itk.Dispatcher.Models;
+    using Microsoft.WindowsAzure.Storage.Table;
 
     public interface IAzureStorageService
     {
-        int AddHash(Journey journey);
+        void AddEntity(TableEntity entity);
 
-        Journey GetHash(string journeyId);
+        bool EntityExists(TableEntity entity);
     }
 }

@@ -13,12 +13,15 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Builders {
         private const submitEncounterToServiceResponseOverallStatus SUCCESS_RESPONSE =
             submitEncounterToServiceResponseOverallStatus.Successful_call_to_gp_webservice;
 
-        public ItkDispatchResponse Build(SubmitHaSCToServiceResponse submitHaScToServiceResponse) {
-            return new ItkDispatchResponse {
-                StatusCode =
-                    DetermineSuccess(submitHaScToServiceResponse.SubmitEncounterToServiceResponse.OverallStatus),
-                Body = submitHaScToServiceResponse.SubmitEncounterToServiceResponse.OverallStatus.ToString()
-            };
+        public ItkDispatchResponse Build(SubmitHaSCToServiceResponse submitHaScToServiceResponse)
+        {
+            return new ItkDispatchResponse
+                       {
+                           StatusCode =
+                               DetermineSuccess(
+                                   submitHaScToServiceResponse.SubmitEncounterToServiceResponse.OverallStatus),
+                           Body = submitHaScToServiceResponse.SubmitEncounterToServiceResponse.OverallStatus.ToString()
+                       };
         }
 
         public ItkDispatchResponse Build(SubmitHaSCToServiceResponse submitHaScToServiceResponse, string patientRef)
@@ -29,15 +32,16 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Builders {
         }
 
         // Suggest mapping this an automapper mapping: submitEncounterToServiceResponseOverallStatus -> HttpStatusCode
-        private HttpStatusCode DetermineSuccess(submitEncounterToServiceResponseOverallStatus responseStatus) {
-            if (responseStatus == SUCCESS_RESPONSE) return HttpStatusCode.OK;
-            return HttpStatusCode.InternalServerError;
+        private HttpStatusCode DetermineSuccess(submitEncounterToServiceResponseOverallStatus responseStatus)
+        {
+            return responseStatus == SUCCESS_RESPONSE ? HttpStatusCode.OK : HttpStatusCode.InternalServerError;
         }
 
         public ItkDispatchResponse Build(Exception exception)
         {
             return Build(exception, "An error has occured processing the request.");
         }
+
         public ItkDispatchResponse Build(Exception exception, string body)
         {
             return new ItkDispatchResponse
@@ -47,16 +51,19 @@ namespace NHS111.Business.Itk.Dispatcher.Api.Builders {
                         ? HttpStatusCode.Conflict
                         : HttpStatusCode.InternalServerError,
                 Body = body,
-                Content =
-                    new StringContent(JsonConvert.SerializeObject(exception.Message), Encoding.UTF8, "application/json")
+                Content = new StringContent(JsonConvert.SerializeObject(exception.Message), Encoding.UTF8, "application/json")
             };
         }
     }
 
-    public interface IItkDispatchResponseBuilder {
+    public interface IItkDispatchResponseBuilder
+    {
         ItkDispatchResponse Build(SubmitHaSCToServiceResponse submitHaScToServiceResponse);
+
         ItkDispatchResponse Build(SubmitHaSCToServiceResponse submitHaScToServiceResponse, string patientRef);
+
         ItkDispatchResponse Build(Exception exception);
+
         ItkDispatchResponse Build(Exception exception, string body);
     }
 }
